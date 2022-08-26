@@ -6,18 +6,6 @@ on:
         SLACK_PAYLOAD:
           type: string
           required: true
-        WP_SUBDOMAIN:
-          type: string
-          required: true
-        PROJECT_NAME:
-          type: string
-          required: true
-        ACTOR:
-          type: string
-          required: true
-        GIT_RUN_URL:
-          type: string
-          required: true
       secrets:
         SLACK_WEBHOOK_URL:
           required: true
@@ -27,6 +15,10 @@ jobs:
     name: Send Slack notification
     runs-on: ubuntu-latest
     steps:
+      - name: Show Payload
+        run: |
+          echo ${{ inputs.SLACK_PAYLOAD }}
+
       - name: Send custom JSON data to Slack workflow
         id: slack
         # https://github.com/marketplace/actions/slack-send
@@ -34,9 +26,5 @@ jobs:
         with:
           # This data can be any valid JSON from a previous step in the GitHub Action
           payload: ${{ inputs.SLACK_PAYLOAD }}
-          WP_SUBDOMAIN: ${{ inputs.WP_SUBDOMAIN }}
-          PROJECT_NAME: ${{ inputs.PROJECT_NAME }}
-          ACTOR: ${{ inputs.ACTOR }}
-          GIT_RUN_URL: ${{ inputs.GIT_RUN_URL }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
