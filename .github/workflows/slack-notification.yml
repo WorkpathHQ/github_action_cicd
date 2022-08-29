@@ -15,10 +15,6 @@ jobs:
     name: Send Slack notification
     runs-on: ubuntu-latest
     steps:
-      - name: Show Payload
-        run: |
-          echo ${{ inputs.SLACK_PAYLOAD }}
-
       - name: Send custom JSON data to Slack workflow
         id: slack
         # https://github.com/marketplace/actions/slack-send
