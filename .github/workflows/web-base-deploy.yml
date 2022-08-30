@@ -21,9 +21,6 @@ on:
       GIT_SHA:
         type: string
         required: true
-      GIT_SHORT_SHA:
-        type: string
-        required: true
       GIT_BRANCH:
         type: string
         required: true
