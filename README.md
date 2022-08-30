@@ -1,5 +1,5 @@
-# workpath_cicd-actions
-This repository contains GitHub Action workflows and jobs for the Workpath CI/CD pipeline. 
+# github_action_cicd
+This repository contains the GitHub Actions workflows and jobs for the Workpath CI/CD pipeline. 
 
 ## CD
 
