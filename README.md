@@ -1,6 +1,9 @@
 # github_action_cicd
 This repository contains the GitHub Actions workflows and jobs for the Workpath CI/CD pipeline. 
 
+## CI
+WIP
+
 ## CD
 
 ### Build, tag, push image to AWS ECR (reusable workflow)
