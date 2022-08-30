@@ -9,7 +9,7 @@ This repository contains the GitHub Actions workflows and jobs for the Workpath 
 | AWS_DEFAULT_REGION  | The default region used by AWS | 
 | ECR_REGISTRY | The ECR Registry this image should be pushed to | 
 | ECR_REPOSITORY | The ECR Repository this image should be pushed to | 
-| IMAGE_TAG | The Tag for the image: \\n For QA Environments the tag is the commit hash \n For Staging the tag is 'latest' (changes when projects are versioned) | 
+| IMAGE_TAG | The Tag for the image: <br /> For QA Environments the tag is the commit hash <br /> For Staging the tag is 'latest' (changes when projects are versioned) | 
 
 
 | Secret | Description |  
@@ -46,7 +46,7 @@ This repository contains the GitHub Actions workflows and jobs for the Workpath 
 | WP_API_VERSION | GitHub long hash of the API commit this deployment should be matched |
 | WP_WEB_VERSION | GitHub long hash of the Web commit this deployment should be matched |
 | WP_ENVIRONMENT | The environment to be deployed to (qa, staging, production)  |
-| WP_DOMAIN | The domain used for the deployments: qa -> workpath.dev staging -> wrkpth.dev production -> workpath.com
+| WP_DOMAIN | The domain used for the deployments: <br />qa -> workpath.dev <br />staging -> wrkpth.dev <br />production -> workpath.com
 | WP_K8S_VERSION | K8s Version used to deploy |
 
 | Secrets |  |
