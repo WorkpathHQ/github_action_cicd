@@ -1,0 +1,112 @@
+name: Base Deploy 
+
+on: 
+  workflow_call:
+    inputs:
+      AWS_DEFAULT_REGION:
+        type: string
+        required: true
+      AWS_ACCESS_KEY_ID_S3:
+        type: string
+        required: true
+      EKS_CLUSTER:
+        type: string
+        required: true
+      ECR_REGISTRY:
+        type: string
+        required: true
+      PROJECT_NAME:
+        type: string
+        required: true
+      GIT_SHA:
+        type: string
+        required: true
+      GIT_BRANCH:
+        type: string
+        required: true
+      WP_API_VERSION:
+        type: string
+        required: true
+      WP_WEB_VERSION:
+        type: string
+        required: true
+      WP_ENVIRONMENT:
+        type: string
+        required: true
+      WP_DOMAIN:
+        type: string
+        required: true
+      WP_K8S_VERSION:
+        type: string
+        required: true
+
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      AWS_SECRET_ACCESS_KEY_S3:
+        required: true     
+      RAILS_MASTER_KEY:
+        required: true
+      REDIS_PASSWORD:
+        required: true
+      DATABASE_PASSWORD:
+        required: true
+      GIT_ACCESS_TOKEN:
+        required: true
+
+jobs:     
+  base_deploy:
+    name: Base Deploy
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.WP_ENVIRONMENT }}
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ inputs.AWS_DEFAULT_REGION }}
+
+      - name: Set EKS context for Kubectl
+        run: |
+          aws eks --region ${{ inputs.AWS_DEFAULT_REGION }} update-kubeconfig --name ${{ inputs.EKS_CLUSTER }}
+          
+      - name: Clone workpath_k8s repository
+        uses: actions/checkout@v2
+        with:
+          repository: WorkpathHQ/workpath_k8s
+          ref: ${{ inputs.WP_K8S_VERSION }}
+          token: ${{ secrets.GIT_ACCESS_TOKEN }}
+          path: ${{ github.workspace }}/workpath_k8s
+
+      - name: Deploying
+        run: |
+          cd ${{ github.workspace }}/workpath_k8s/workpath_app
+          ./envsubst-multiGit.sh && source ./envsubst-multiGit.sh
+          echo "$(tr '[:lower:]' '[:upper:]' <<< ${{ inputs.WP_ENVIRONMENT }}) env will be reachable via $WP_SUBDOMAIN.$WP_DOMAIN, $WP_SUBDOMAIN.$WP_DOMAIN, $WP_SUBDOMAIN.$WP_DOMAIN"
+          if [ ${{ inputs.WP_ENVIRONMENT }} == qa ]; then
+            kubectl apply -k overlays/${{ inputs.WP_ENVIRONMENT }}
+            kubectl rollout status deploy workpath-web -n $SEMAPHORE_GIT_BRANCH-$SHORT_GIT_SHA --timeout=0s
+            kubectl rollout status deploy workpath-api -n $WP_SUBDOMAIN --timeout=300s
+          else 
+            kubectl apply -k overlays/staging --selector "app in (workpath-ns, workpath-web)"
+            kubectl -n workpath-staging rollout restart deployment workpath-web
+            kubectl -n workpath-staging rollout status deploy workpath-web --timeout=0s
+          fi
+          echo "Succesful Deploy on $(tr '[:lower:]' '[:upper:]' <<< {{ inputs.WP_ENVIRONMENT }}), reachable via admin.$WP_DOMAIN, api.$WP_DOMAIN, connect.$WP_DOMAIN, *.$WP_DOMAIN"
+          
+        # Workaround for setting inputs as environmental variables (https://github.com/actions/runner/issues/665#issuecomment-699481628)
+        env:
+          PROJECT_NAME: ${{ inputs.PROJECT_NAME }}
+          GIT_SHA: ${{ inputs.GIT_SHA }}
+          GIT_BRANCH: ${{ inputs.GIT_BRANCH }}
+          WP_API_VERSION: ${{ inputs.WP_API_VERSION }}
+          WP_WEB_VERSION: ${{ inputs.WP_WEB_VERSION }}
+          WP_ENVIRONMENT: ${{ inputs.WP_ENVIRONMENT }}
+          AWS_ACCESS_KEY_ID_S3: ${{ inputs.AWS_ACCESS_KEY_ID_S3 }}
+          WP_DOMAIN: ${{ inputs.WP_DOMAIN }}
+          AWS_SECRET_ACCESS_KEY_S3: ${{ secrets.AWS_SECRET_ACCESS_KEY_S3 }}
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
