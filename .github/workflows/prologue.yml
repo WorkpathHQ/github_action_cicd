@@ -1,0 +1,59 @@
+name: Prologue
+
+on: 
+  workflow_call:
+    outputs:
+      GIT_PROJECT_NAME: 
+        description: "The first output string"
+        value: ${{ jobs.prologue.outputs.GIT_PROJECT_NAME }}
+      GIT_BRANCH: 
+        description: "The first output string"
+        value: ${{ jobs.prologue.outputs.GIT_BRANCH }}
+      GIT_SHORTENED_BRANCH: 
+        description: "The first output string"
+        value: ${{ jobs.prologue.outputs.GIT_SHORTENED_BRANCH }}
+      GIT_SHA: 
+        description: "The first output string"
+        value: ${{ jobs.prologue.outputs.GIT_SHA }}
+      GIT_SHORT_SHA: 
+        description: "The first output string"
+        value: ${{ jobs.prologue.outputs.GIT_SHORT_SHA }}
+      GIT_COMMIT_AUTHOR_SUBJECT: 
+        description: "The first output string"
+        value: ${{ jobs.prologue.outputs.GIT_COMMIT_AUTHOR_SUBJECT }}
+
+jobs:
+  prologue:
+    name: Prologue
+    runs-on: ubuntu-latest
+    outputs:
+      GIT_PROJECT_NAME: ${{ steps.vars.outputs.git_project_name }}
+      GIT_BRANCH: ${{ steps.vars.outputs.git_branch }}
+      GIT_SHORTENED_BRANCH: ${{ steps.vars.outputs.git_project_name }}
+      GIT_SHA: ${{ steps.vars.outputs.git_sha }}
+      GIT_SHORT_SHA: ${{ steps.vars.outputs.git_short_sha }}
+      GIT_COMMIT_AUTHOR_SUBJECT: ${{ steps.vars.outputs.git_commit_author_subject }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+     
+      - name: Set outputs
+        id: vars
+        run: |
+          GIT_PROJECT_NAME=${{ github.event.repository.name }}
+          GIT_REFERENCE=${{ github.ref }}
+          GIT_BRANCH=$(echo ${GIT_REFERENCE#refs/heads/})
+          GIT_SHORTENED_BRANCH=$(echo "$GIT_BRANCH" | tr '[:upper:]' '[:lower:]' | sed "s/\//-/g" | sed "s/\_/-/g" | sed "s/\./-/g" | cut -c1-54 | sed 's/\(.*\)-/\1/')
+          GIT_SHA=${{ github.sha }}
+          GIT_SHORT_SHA=$(echo $GIT_SHA | cut -c1-7)
+          WP_SUBDOMAIN="$GIT_SHORTENED_BRANCH-$GIT_SHORT_SHA"
+          cd ${{ github.workspace }}
+          git fetch
+          GIT_COMMIT_AUTHOR_SUBJECT=$(git show -s --format='%an %s' "$GIT_SHA")
+          echo "::set-output name=git_project_name::$GIT_PROJECT_NAME"
+          echo "::set-output name=git_branch::$GIT_BRANCH"
+          echo "::set-output name=git_shortened_branch::$GIT_SHORTENED_BRANCH"
+          echo "::set-output name=git_sha::$GIT_SHA"
+          echo "::set-output name=git_short_sha::$GIT_SHORT_SHA"
+          echo "::set-output name=wp_subdomain::$WP_SUBDOMAIN"
+          echo "::set-output name=git_commit_author_subject::$GIT_COMMIT_AUTHOR_SUBJECT"
