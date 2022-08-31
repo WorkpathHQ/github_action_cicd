@@ -2,10 +2,6 @@ name: Prologue
 
 on: 
   workflow_call:
-    inputs:
-      WP_ENVIRONMENT:
-        type: string
-        required: true
     outputs:
       GIT_PROJECT_NAME: 
         description: "Git project name"
