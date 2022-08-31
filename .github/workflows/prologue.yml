@@ -54,7 +54,8 @@ jobs:
           WP_SUBDOMAIN="$GIT_SHORTENED_BRANCH-$GIT_SHORT_SHA"
           cd ${{ github.workspace }}
           git fetch
-          GIT_COMMIT_AUTHOR_SUBJECT=$(git show -s --format='%an %s' "$GIT_SHA")
+          git checkout $GIT_SHA
+          GIT_COMMIT_AUTHOR_SUBJECT=$(git show -s --format='%an %s' )
           echo "::set-output name=git_project_name::$GIT_PROJECT_NAME"
           echo "::set-output name=git_branch::$GIT_BRANCH"
           echo "::set-output name=git_shortened_branch::$GIT_SHORTENED_BRANCH"
