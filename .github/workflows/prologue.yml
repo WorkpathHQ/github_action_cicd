@@ -64,3 +64,9 @@ jobs:
           echo "::set-output name=git_short_sha::$GIT_SHORT_SHA"
           echo "::set-output name=wp_subdomain::$WP_SUBDOMAIN"
           echo "::set-output name=git_commit_author_subject::$GIT_COMMIT_AUTHOR_SUBJECT"
+      
+      - name: print all outputs
+        run: |
+          echo ${{ steps.vars.outputs.git_sha }}
+          echo ${{ steps.vars.outputs.git_branch }}
+          echo ${{ steps.vars.outputs.git_commit_author_subject }}
