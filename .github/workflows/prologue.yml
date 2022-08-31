@@ -44,7 +44,7 @@ jobs:
           GIT_PROJECT_NAME=${{ github.event.repository.name }}
           if [ ${{ github.event_name }} == "pull_request" ]; then
             GIT_REFERENCE=${{ github.head_ref }}
-            GIT_SHA=${{ github.event.pull_request.base.head.sha }}
+            GIT_SHA=${{ github.event.pull_request.head.sha }}
           else 
             GIT_REFERENCE=${{ github.ref }}
             GIT_SHA=${{ github.sha }}
