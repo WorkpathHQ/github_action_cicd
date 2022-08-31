@@ -42,7 +42,7 @@ jobs:
         id: vars
         run: |
           GIT_PROJECT_NAME=${{ github.event.repository.name }}
-          if [ ${{ github.event_name == pull_request ]; then
+          if [ ${{ github.event_name == \"pull_request\" ]; then
             GIT_REFERENCE=${{ github.head_ref }}
           else 
             GIT_REFERENCE=${{ github.ref }}
