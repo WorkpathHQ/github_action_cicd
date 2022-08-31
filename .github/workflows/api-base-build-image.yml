@@ -3,12 +3,6 @@ name: Base Build image
 on: 
   workflow_call:
     inputs:
-      AWS_DEFAULT_REGION:
-        type: string
-        required: true
-      ECR_REGISTRY: 
-        type: string
-        required: true
       ECR_REPOSITORY:
         type: string
         required: true
@@ -20,6 +14,10 @@ on:
         required: true
       AWS_SECRET_ACCESS_KEY:
         required: true
+
+env:
+  AWS_DEFAULT_REGION: eu-central-1
+  ECR_REGISTRY: 147753604753.dkr.ecr.eu-central-1.amazonaws.com
 
 jobs:
   base_build_image:
@@ -33,7 +31,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ inputs.AWS_DEFAULT_REGION }}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -41,5 +39,5 @@ jobs:
 
       - name: Build, tag, and push image to AWS ECR
         run: |
-          docker build --tag ${{ inputs.ECR_REGISTRY }}/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }} .
-          docker push ${{ inputs.ECR_REGISTRY }}/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }}   
+          docker build --tag ${{ env.ECR_REGISTRY }}/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }} .
+          docker push ${{ env.ECR_REGISTRY }}/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }}   

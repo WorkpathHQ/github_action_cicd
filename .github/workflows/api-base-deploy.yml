@@ -3,16 +3,10 @@ name: Base Deploy
 on: 
   workflow_call:
     inputs:
-      AWS_DEFAULT_REGION:
-        type: string
-        required: true
       AWS_ACCESS_KEY_ID_S3:
         type: string
         required: true
       EKS_CLUSTER:
-        type: string
-        required: true
-      ECR_REGISTRY:
         type: string
         required: true
       PROJECT_NAME:
@@ -36,9 +30,6 @@ on:
       WP_DOMAIN:
         type: string
         required: true
-      WP_K8S_VERSION:
-        type: string
-        required: true
 
     secrets:
       AWS_ACCESS_KEY_ID:
@@ -56,6 +47,10 @@ on:
       GIT_ACCESS_TOKEN:
         required: true
 
+env: 
+  WP_K8S_VERSION: v0.4.4
+  AWS_DEFAULT_REGION: eu-central-1
+
 jobs:     
   base_deploy:
     name: Base Deploy
@@ -66,17 +61,17 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ inputs.AWS_DEFAULT_REGION }}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
       - name: Set EKS context for Kubectl
         run: |
-          aws eks --region ${{ inputs.AWS_DEFAULT_REGION }} update-kubeconfig --name ${{ inputs.EKS_CLUSTER }}
+          aws eks --region ${{ env.AWS_DEFAULT_REGION }} update-kubeconfig --name ${{ inputs.EKS_CLUSTER }}
           
       - name: Clone workpath_k8s repository
         uses: actions/checkout@v2
         with:
           repository: WorkpathHQ/workpath_k8s
-          ref: ${{ inputs.WP_K8S_VERSION }}
+          ref: ${{ env.WP_K8S_VERSION }}
           token: ${{ secrets.GIT_ACCESS_TOKEN }}
           path: ${{ github.workspace }}/workpath_k8s
 
