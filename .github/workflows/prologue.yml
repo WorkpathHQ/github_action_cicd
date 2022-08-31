@@ -2,29 +2,37 @@ name: Prologue
 
 on: 
   workflow_call:
+    inputs:
+      WP_ENVIRONMENT:
+        type: string
+        required: true
     outputs:
       GIT_PROJECT_NAME: 
-        description: "The first output string"
+        description: "Git project name"
         value: ${{ jobs.prologue.outputs.GIT_PROJECT_NAME }}
       GIT_BRANCH: 
-        description: "The first output string"
+        description: "Branch name"
         value: ${{ jobs.prologue.outputs.GIT_BRANCH }}
       GIT_SHORTENED_BRANCH: 
-        description: "The first output string"
+        description: "Cleaned branch name"
         value: ${{ jobs.prologue.outputs.GIT_SHORTENED_BRANCH }}
       GIT_SHA: 
-        description: "The first output string"
+        description: "Full GitHub Sha"
         value: ${{ jobs.prologue.outputs.GIT_SHA }}
       GIT_SHORT_SHA: 
-        description: "The first output string"
+        description: "Short GitHub sha"
         value: ${{ jobs.prologue.outputs.GIT_SHORT_SHA }}
       GIT_COMMIT_AUTHOR_SUBJECT: 
-        description: "The first output string"
+        description: "Author + Last commit / PR title"
         value: ${{ jobs.prologue.outputs.GIT_COMMIT_AUTHOR_SUBJECT }}
+      WP_DOMAIN:
+        description: "Workpath domain"
+        value: ${{ jobs.prologue.outputs.WP_DOMAIN }}
 
 jobs:
   prologue:
     name: Prologue
+    environment: ${{ inputs.WP_ENVIRONMENT }}
     runs-on: ubuntu-latest
     outputs:
       GIT_PROJECT_NAME: ${{ steps.vars.outputs.git_project_name }}
@@ -33,6 +41,7 @@ jobs:
       GIT_SHA: ${{ steps.vars.outputs.git_sha }}
       GIT_SHORT_SHA: ${{ steps.vars.outputs.git_short_sha }}
       GIT_COMMIT_AUTHOR_SUBJECT: ${{ steps.vars.outputs.git_commit_author_subject }}
+      WP_DOMAIN: ${{ secrets.WP_DOMAIN }}
     steps:
       - name: Check out code
         uses: actions/checkout@v3
