@@ -78,7 +78,7 @@ jobs:
       - name: Deploying
         run: |
           cd ${{ github.workspace }}/workpath_k8s/workpath_app
-          ./envsubst-multiGit.sh && source ./envsubst-multiGit.sh
+          ./envsubst-multi.sh && source ./envsubst-multi.sh
           echo "$(tr '[:lower:]' '[:upper:]' <<< ${{ inputs.WP_ENVIRONMENT }}) env will be reachable via $WP_SUBDOMAIN.$WP_DOMAIN, $WP_SUBDOMAIN.$WP_DOMAIN, $WP_SUBDOMAIN.$WP_DOMAIN"
           if [ ${{ inputs.WP_ENVIRONMENT }} == qa ]; then
             kubectl apply -k overlays/${{ inputs.WP_ENVIRONMENT }}
