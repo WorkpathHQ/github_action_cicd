@@ -45,10 +45,11 @@ jobs:
           GIT_PROJECT_NAME=${{ github.event.repository.name }}
           if [ ${{ github.event_name }} == "pull_request" ]; then
             GIT_REFERENCE=${{ github.head_ref }}
+            GIT_SHA=${{ github.event.pull_request.base.sha }}
           else 
             GIT_REFERENCE=${{ github.ref }}
+            GIT_SHA=${{ github.sha }}
           fi
-          GIT_SHA=${{ github.sha }}
           GIT_BRANCH=$(echo ${GIT_REFERENCE#refs/heads/})
           GIT_SHORTENED_BRANCH=$(echo "$GIT_BRANCH" | tr '[:upper:]' '[:lower:]' | sed "s/\//-/g" | sed "s/\_/-/g" | sed "s/\./-/g" | cut -c1-54 | sed 's/\(.*\)-/\1/')
           GIT_SHORT_SHA=$(echo $GIT_SHA | cut -c1-7)
