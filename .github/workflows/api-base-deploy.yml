@@ -30,6 +30,9 @@ on:
       WP_DOMAIN:
         type: string
         required: true
+      SMTP_USERNAME:
+        type: string
+        required: false
 
     secrets:
       AWS_ACCESS_KEY_ID:
@@ -46,6 +49,10 @@ on:
         required: true
       GIT_ACCESS_TOKEN:
         required: true
+      SMTP_PASSWORD:
+        required: false
+      POSTGRES_PASSWORD:
+        required: false
 
 env: 
   WP_K8S_VERSION: v0.4.5
