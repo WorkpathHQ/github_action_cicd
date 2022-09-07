@@ -108,7 +108,10 @@ jobs:
           WP_ENVIRONMENT: ${{ inputs.WP_ENVIRONMENT }}
           AWS_ACCESS_KEY_ID_S3: ${{ inputs.AWS_ACCESS_KEY_ID_S3 }}
           WP_DOMAIN: ${{ inputs.WP_DOMAIN }}
+          SMTP_USERNAME: ${{ inputs.SMTP_USERNAME }}
           AWS_SECRET_ACCESS_KEY_S3: ${{ secrets.AWS_SECRET_ACCESS_KEY_S3 }}
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          DB_MASTER_PASSWORD: ${{ secrets.DB_MASTER_PASSWORD }}
