@@ -51,7 +51,7 @@ on:
         required: true
       SMTP_PASSWORD:
         required: false
-      POSTGRES_PASSWORD:
+      DB_MASTER_PASSWORD:
         required: false
 
 env: 
