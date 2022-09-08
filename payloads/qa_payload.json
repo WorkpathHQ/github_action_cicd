@@ -5,7 +5,7 @@
         "type": "section",
         "text": {
           "type": "mrkdwn",
-          "text": "test"
+          "text": "*'${{ needs.prologue.outputs.GIT_PROJECT_NAME }}'*"
         }
       }
     ]
