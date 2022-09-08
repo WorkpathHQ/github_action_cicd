@@ -28,14 +28,13 @@ jobs:
       - name: readJson
         id: readJson
         run: |
-          
-          content=$(cat ${{ inputs.payload-file-path }})
+          envsubst < ${{ inputs.payload-file-path }} | content
           # the following lines are only required for multi line json
           content="${content//'%'/'%25'}"
           content="${content//$'\n'/'%0A'}"
           content="${content//$'\r'/'%0D'}"
           # end of optional handling for multi line json
-          envsubst < $content | output
+         
           echo "::set-output name=packageJson::$output"
 
       # https://github.com/alonsohki/slack-webhook-payload
