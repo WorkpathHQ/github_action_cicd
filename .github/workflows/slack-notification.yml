@@ -22,6 +22,8 @@ jobs:
         with:
           repository: WorkpathHQ/github_action_cicd
           token: ${{ secrets.GIT_ACCESS_TOKEN }}
+          path: ${{ github.workspace }}/github_action_cicd
+          ref: slacktest
 
       - name: Send GitHub Action trigger data to Slack workflow
         id: slack
