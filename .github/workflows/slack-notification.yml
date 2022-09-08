@@ -35,8 +35,8 @@ jobs:
           content="${content//$'\n'/'%0A'}"
           content="${content//$'\r'/'%0D'}"
           # end of optional handling for multi line json
-          eval $content
-          echo "::set-output name=packageJson::$content"
+          envsubst < $content > output
+          echo "::set-output name=packageJson::$output"
 
       # https://github.com/alonsohki/slack-webhook-payload
       - uses: alonsohki/slack-webhook-payload@v1
