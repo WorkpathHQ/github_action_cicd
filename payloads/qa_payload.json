@@ -5,7 +5,7 @@
         "type": "section",
         "text": {
           "type": "mrkdwn",
-          "text": "${{ env.WP_DOMAIN }}"
+          "text": "test ${{ env.WP_DOMAIN }}"
         }
       }
     ]
