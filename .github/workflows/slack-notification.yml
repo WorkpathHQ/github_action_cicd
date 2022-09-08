@@ -35,16 +35,13 @@ jobs:
           content="${content//$'\n'/'%0A'}"
           content="${content//$'\r'/'%0D'}"
           # end of optional handling for multi line json
-         
-          echo "::set-output name=packageJson::$output"
+          echo "::set-output name=packageJson::$content"
 
       # https://github.com/alonsohki/slack-webhook-payload
       - uses: alonsohki/slack-webhook-payload@v1
         with:
           slack-webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
           content: ${{ steps.readJson.outputs.packageJson }}
-
-
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           WP_DOMAIN: workpath.dev
