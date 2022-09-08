@@ -1,5 +1,6 @@
 {
-    "attachments": [{
+  "attachments": [
+    {
       "blocks": [
         {
           "type": "section",
@@ -9,5 +10,6 @@
           }
         }
       ]
-    }]
-  }
+    }
+  ]
+}
