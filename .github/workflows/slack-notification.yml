@@ -28,12 +28,12 @@ jobs:
       - uses: danielr1996/envsubst-action@1.0.0
         with:
           input: ${{ inputs.payload-file-path }}
-          output: ${{ inputs.payload-file-path }}
+          output: new${{ inputs.payload-file-path }}
 
       - name: readJson
         id: readJson
         run: |
-          content=$(cat ${{ inputs.payload-file-path }})
+          content=$(cat ${{ newinputs.payload-file-path }})
           # the following lines are only required for multi line json
           content="${content//'%'/'%25'}"
           content="${content//$'\n'/'%0A'}"
