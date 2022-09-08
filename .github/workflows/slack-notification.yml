@@ -1,0 +1,24 @@
+name: Slack notification
+
+on: 
+  workflow_call:
+    inputs:
+      payload-file-path:
+        type: string
+        required: true
+    secrets:
+      SLACK_WEBHOOK_URL:
+        required: true
+
+jobs:
+  send_slack_notification:
+    name: Send Slack notification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send GitHub Action trigger data to Slack workflow
+        id: slack
+        uses: slackapi/slack-github-action@v1.21.0
+        with:
+          payload-file-path: ${{ inputs.payload-file-path }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
