@@ -5,7 +5,7 @@
         "type": "section",
         "text": {
           "type": "mrkdwn",
-          "text": "${{ github.repository }}"
+          "text": "github repo: ${{ github.repository }}"
         }
       }
     ]
