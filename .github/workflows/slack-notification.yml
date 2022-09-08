@@ -28,7 +28,7 @@ jobs:
       - name: readJson
         id: readJson
         run: |
-          content=$(eval ${{ inputs.payload-file-path }})
+          content=$(eval $(echo ${{ inputs.payload-file-path }}))
           # the following lines are only required for multi line json
           content="${content//'%'/'%25'}"
           content="${content//$'\n'/'%0A'}"
