@@ -15,6 +15,12 @@ jobs:
     name: Send Slack notification
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: WorkpathHQ/github_action_cicd
+          token: ${{ secrets.GIT_ACCESS_TOKEN }}
+
       - name: Send GitHub Action trigger data to Slack workflow
         id: slack
         uses: slackapi/slack-github-action@v1.21.0
