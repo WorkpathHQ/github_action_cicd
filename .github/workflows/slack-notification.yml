@@ -25,10 +25,22 @@ jobs:
           path: ${{ github.workspace }}/github_action_cicd
           ref: slacktest
 
+      - name: readJson
+        run: |
+          content=`cat ${{ inputs.payload-file-path }}`
+          # the following lines are only required for multi line json
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          # end of optional handling for multi line json
+          echo "::set-output name=packageJson::$content"
+
       - name: Send GitHub Action trigger data to Slack workflow
         id: slack
-        uses: slackapi/slack-github-action@v1.16.0
+        uses: slackapi/slack-github-action@v1.21.0
         with:
-          payload-file-path: ${{ inputs.payload-file-path }}
+          payload: $PAYLOAD
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          PAYLOAD: ${{ steps.readJson.outputs.packageJson }}
+
