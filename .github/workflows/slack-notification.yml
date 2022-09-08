@@ -25,22 +25,29 @@ jobs:
           path: ${{ github.workspace }}/github_action_cicd
           ref: slacktest
 
-      # - name: readJson
-      #   id: readJson
-      #   run: |
-      #     content=`cat ${{ inputs.payload-file-path }}`
-      #     echo $content
-      #     # the following lines are only required for multi line json
-      #     # content="${content//'%'/'%25'}"
-      #     # content="${content//$'\n'/'%0A'}"
-      #     # content="${content//$'\r'/'%0D'}"
-      #     # end of optional handling for multi line json
-      #     echo "::set-output name=packageJson::$content"
+      - name: readJson
+        id: readJson
+        run: |
+          content=`cat ${{ inputs.payload-file-path }}`
+          echo $content
+          # the following lines are only required for multi line json
+          # content="${content//'%'/'%25'}"
+          # content="${content//$'\n'/'%0A'}"
+          # content="${content//$'\r'/'%0D'}"
+          # end of optional handling for multi line json
+          echo "::set-output name=packageJson::$content"
 
       - name: Send custom JSON data to Slack workflow
         run: |
-          content=`cat ${{ inputs.payload-file-path }}`
-          curl -X POST $SLACK_WEBHOOK_URL -H "Content-Type: application/json" -d "$content"
+          curl -X POST $SLACK_WEBHOOK_URL -H "Content-Type: application/json" -d "${{ steps.readJson.outputs.packageJson }}"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           WP_DOMAIN: workpath.dev
+
+      - name: Send custom JSON data to Slack workflow
+        id: slack
+        uses: slackapi/slack-github-action@v1.21.0
+        with:
+          payload: ${{ steps.readJson.outputs.packageJson }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
