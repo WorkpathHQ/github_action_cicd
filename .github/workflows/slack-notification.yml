@@ -35,12 +35,10 @@ jobs:
           # end of optional handling for multi line json
           echo "::set-output name=packageJson::$content"
 
-      - name: Send GitHub Action trigger data to Slack workflow
-        id: slack
-        uses: slackapi/slack-github-action@v1.21.0
-        with:
-          payload: $PAYLOAD
+      - name: Send custom JSON data to Slack workflow
+        run: |
+          curl -X POST $SLACK_WEBHOOK_URL -H "Content-Type: application/json" -d '$PAYLOAD'
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.QA_SLACK_WEBHOOK }}
+          WP_DOMAIN: workpath.dev
           PAYLOAD: ${{ steps.readJson.outputs.packageJson }}
-
