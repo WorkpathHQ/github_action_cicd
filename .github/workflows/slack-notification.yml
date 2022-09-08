@@ -29,6 +29,7 @@ jobs:
         id: readJson
         run: |
           export SERVER_URL=${{ github.server_url }}
+          export GIT_PROJECT_NAME
           content=$(envsubst < ${{ inputs.payload-file-path }})
           # the following lines are only required for multi line json
           content="${content//'%'/'%25'}"
