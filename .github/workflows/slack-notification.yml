@@ -9,6 +9,8 @@ on:
     secrets:
       SLACK_WEBHOOK_URL:
         required: true
+      GIT_ACCESS_TOKEN:
+        required: true
 
 jobs:
   send_slack_notification:
