@@ -54,6 +54,7 @@ jobs:
 
           mkdir ./tmp
           # awk removes the indents
+          # tr removes the newlines but somehow leaves '\n'
           cat ${{ inputs.payload-file-path }} | awk '{$1=$1};1' | tr '\n' ' ' > ./tmp/trimmed.json
 
           content=$(envsubst < ./tmp/trimmed.json)
@@ -66,6 +67,14 @@ jobs:
          
           echo "::set-output name=packageJson::$content"
 
+      - name: Send Json via curl
+        run: | 
+          curl -X POST $SLACK_WEBHOOK_URL -H "Content-Type: application/json" -d '$content'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          content: ${{ steps.readJson.outputs.packageJson }}
+
+
       # https://github.com/alonsohki/slack-webhook-payload
       - uses: alonsohki/slack-webhook-payload@v1
         with:
@@ -74,11 +83,4 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      - name: Send custom JSON data to Slack workflow
-        id: slack
-        uses: slackapi/slack-github-action@v1.21.0
-        with:
-          # This data can be any valid JSON from a previous step in the GitHub Action
-          payload: ${{ steps.readJson.outputs.packageJson }}
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
