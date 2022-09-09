@@ -53,7 +53,7 @@ jobs:
           export WP_DOMAIN=${{ inputs.WP_DOMAIN }}
 
           mkdir ./tmp
-
+          # awk removes the indents
           cat ${{ inputs.payload-file-path }} | awk '{$1=$1};1' | tr '\n' ' ' > ./tmp/trimmed.json
 
           content=$(envsubst < ./tmp/trimmed.json)
@@ -73,4 +73,12 @@ jobs:
           content: ${{ steps.readJson.outputs.packageJson }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          WP_DOMAIN: workpath.dev
+
+      - name: Send custom JSON data to Slack workflow
+        id: slack
+        uses: slackapi/slack-github-action@v1.21.0
+        with:
+          # This data can be any valid JSON from a previous step in the GitHub Action
+          payload: ${{ steps.readJson.outputs.packageJson }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

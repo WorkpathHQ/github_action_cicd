@@ -6,8 +6,10 @@
           "type": "section",
           "text": {
             "type": "mrkdwn",
-            "text": "*$GIT_PROJECT_NAME* \n 
-            <$GIT_SERVER_URL/$GIT_REPOSITORY/actions/runs/$GIT_RUN_ID | new stack> created by $GIT_TRIGGERING_ACTOR\n<$GIT_SERVER_URL/$GIT_REPOSITORY/commit/$GIT_SHA | $GIT_SHORT_SHA> | $GIT_COMMIT_AUTHOR_SUBJECT \n
+            "text": "
+            *$GIT_PROJECT_NAME* \n 
+            <$GIT_SERVER_URL/$GIT_REPOSITORY/actions/runs/$GIT_RUN_ID | new stack> created by $GIT_TRIGGERING_ACTOR\n
+            <$GIT_SERVER_URL/$GIT_REPOSITORY/commit/$GIT_SHA | $GIT_SHORT_SHA> | $GIT_COMMIT_AUTHOR_SUBJECT \n
             <https://$WP_DOMAIN.admin.workpath.dev|Admin Panel> | admin@workpath.com \n
             <https://$WP_DOMAIN.hooli.workpath.dev|Login Page> | demo+admin1@workpath.com \n
             <https://$WP_DOMAIN.connect.workpath.dev|Connect URL> \n
