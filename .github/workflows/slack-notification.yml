@@ -52,15 +52,15 @@ jobs:
           export GIT_COMMIT_AUTHOR_SUBJECT=${{ inputs.GIT_COMMIT_AUTHOR_SUBJECT }}
           export WP_DOMAIN=${{ inputs.WP_DOMAIN }}
 
-          mkdir ./tmp
+          # cat ${{ github.workspace }}/github_action_cicd/payloads/payloadText.txt | tr '\n' ' ' > ./tmp/trimmed.txt
 
-          cat ${{ github.workspace }}/github_action_cicd/payloads/payloadText.txt | tr '\n' ' ' > ./tmp/trimmed.txt
+          # export TEXT=$(envsubst < ./tmp/trimmed.txt)
 
-          export TEXT=$(envsubst < ./tmp/trimmed.txt)
+          # content=$(envsubst < ${{ inputs.payload-file-path }})
+
+          # echo $content
 
           content=$(envsubst < ${{ inputs.payload-file-path }})
-
-          echo $content
 
           curl -X POST $SLACK_WEBHOOK_URL -H "Content-Type: application/json" -d '$content'
         env:
