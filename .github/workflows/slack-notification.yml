@@ -6,6 +6,12 @@ on:
       payload-file-path:
         type: string
         required: true
+      GIT_SHA:
+        type: string
+        required: true
+      GIT_COMMIT_AUTHOR_SUBJECT:
+        type: string
+        required: true
     secrets:
       SLACK_WEBHOOK_URL:
         required: true
@@ -33,9 +39,9 @@ jobs:
           export GIT_REPOSITORY=${{ github.repository }}
           export GIT_RUN_ID=${{ github.run_id }}
           export GIT_TRIGGERING_ACTOR=${{ github.triggering_actor }} 
-          export GIT_SHA=${{ github.event.pull_request.head.sha }}
-          export GIT_SHORT_SHA={{ needs.prologue.outputs.GIT_SHORT_SHA }}
-          export GIT_COMMIT_AUTHOR_SUBJECT={{ needs.prologue.outputs.GIT_COMMIT_AUTHOR_SUBJECT }} 
+          export GIT_SHA=${{ inputs.GIT_SHA }}
+          export GIT_SHORT_SHA=$(echo $GIT_SHA | cut -c1-7)
+          export GIT_COMMIT_AUTHOR_SUBJECT=${{ inputs.GIT_COMMIT_AUTHOR_SUBJECT }}
 
           content=$(envsubst < ${{ inputs.payload-file-path }})
           # the following lines are only required for multi line json
