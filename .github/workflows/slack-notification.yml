@@ -55,15 +55,17 @@ jobs:
           mkdir ./tmp
 
           cat ${{ github.workspace }}/github_action_cicd/payloads/payloadText.txt | tr '\n' ' ' > ./tmp/trimmed.txt
-
+          echo "Trimmed Text:"
           echo $(cat ./tmp/trimmed.txt)
 
           export TEXT=$(envsubst < ./tmp/trimmed.txt)
 
+          echo "Text:""
           echo $TEXT
 
           content=$(envsubst < ${{ inputs.payload-file-path }})
 
+          echo "Content:"
           echo $content
 
           echo "::set-output name=packageJson::$content"
