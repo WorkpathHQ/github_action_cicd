@@ -15,6 +15,9 @@ on:
       GIT_COMMIT_AUTHOR_SUBJECT:
         type: string
         required: true
+      WP_DOMAIN: 
+        type: string
+        required: true
     secrets:
       SLACK_WEBHOOK_URL:
         required: true
@@ -45,6 +48,7 @@ jobs:
           export GIT_SHA=${{ inputs.GIT_SHA }}
           export GIT_SHORT_SHA=$(echo $GIT_SHA | cut -c1-7)
           export GIT_COMMIT_AUTHOR_SUBJECT=${{ inputs.GIT_COMMIT_AUTHOR_SUBJECT }}
+          export WP_DOMAIN=${{ inputs.WP_DOMAIN }}
 
           content=$(envsubst < ${{ inputs.payload-file-path }})
           # the following lines are only required for multi line json
@@ -53,8 +57,6 @@ jobs:
           content="${content//$'\r'/'%0D'}"
           # end of optional handling for multi line json
           echo "::set-output name=packageJson::$content"
-        env:
-          WP_DOMAIN: workpath.dev
 
       # https://github.com/alonsohki/slack-webhook-payload
       - uses: alonsohki/slack-webhook-payload@v1
