@@ -60,7 +60,7 @@ jobs:
 
           export TEXT=$(envsubst < ./tmp/trimmed.txt)
 
-          echo "Text:""
+          echo "Text:"
           echo $TEXT
 
           content=$(envsubst < ${{ inputs.payload-file-path }})
