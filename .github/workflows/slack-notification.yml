@@ -3,7 +3,7 @@ name: Slack notification
 on: 
   workflow_call:
     inputs:
-      payload-file-path:
+      payload-file-name:
         type: string
         required: true
       GIT_PROJECT_NAME:
@@ -51,14 +51,14 @@ jobs:
           export GIT_SHORT_SHA=$(echo $GIT_SHA | cut -c1-7)
           export GIT_COMMIT_AUTHOR_SUBJECT=${{ inputs.GIT_COMMIT_AUTHOR_SUBJECT }}
           export WP_DOMAIN=${{ inputs.WP_DOMAIN }}
-
+          FILE_PATH=${{ github.workspace }}/github_action_cicd/payloads/${{ inputs.payload-file-name }}
           mkdir ./tmp
           # awk removes the indents
           # tr removes the newlines but somehow leaves '\n'
           cat ${{ inputs.payload-file-path }} | awk '{$1=$1};1' | tr '\n' ' ' > ./tmp/trimmed.json
 
           content=$(envsubst < ./tmp/trimmed.json)
-
+          rm -r ./tmp
           # the following lines are only required for multi line json
           content="${content//'%'/'%25'}"
           content="${content//$'\n'/'%0A'}"
@@ -69,18 +69,10 @@ jobs:
 
       - name: Send Json via curl
         run: | 
-          curl -X POST $SLACK_WEBHOOK_URL -H "Content-Type: application/json" -d '${{ env.content }}'
+          curl -X POST $SLACK_WEBHOOK_URL -H "Content-Type: application/json" -d '${{ steps.readJson.outputs.packageJson }}'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          content: ${{ steps.readJson.outputs.packageJson }}
+          
 
-
-      # https://github.com/alonsohki/slack-webhook-payload
-      - uses: alonsohki/slack-webhook-payload@v1
-        with:
-          slack-webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          content: ${{ steps.readJson.outputs.packageJson }}
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
 
