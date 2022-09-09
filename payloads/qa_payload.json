@@ -6,7 +6,12 @@
           "type": "section",
           "text": {
             "type": "mrkdwn",
-            "text": "*$GIT_PROJECT_NAME* \n <$GIT_SERVER_URL/$GIT_REPOSITORY/actions/runs/$GIT_RUN_ID | new stack> created by $GIT_TRIGGERING_ACTOR\n<$GIT_SERVER_URL/$GIT_REPOSITORY/commit/$GIT_SHA | $GIT_SHORT_SHA> | $GIT_COMMIT_AUTHOR_SUBJECT \n<https://$WP_DOMAIN.admin.workpath.dev|Admin Panel> | admin@workpath.com \n<https://$WP_DOMAIN.hooli.workpath.dev|Login Page> | demo+admin1@workpath.com  \n<https://$WP_DOMAIN.connect.workpath.dev|Connect URL> \n<https://workpath.grafana.net/explore?orgId=1&left=%7B%22datasource%22:%22grafanacloud-workpath-logs%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22expr%22:%22%7Bnamespace%3D%5C%22$WP_DOMAIN%5C%22%7D%22%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D|Grafana> | Application Logs"
+            "text": "*$GIT_PROJECT_NAME* \n 
+            <$GIT_SERVER_URL/$GIT_REPOSITORY/actions/runs/$GIT_RUN_ID | new stack> created by $GIT_TRIGGERING_ACTOR\n<$GIT_SERVER_URL/$GIT_REPOSITORY/commit/$GIT_SHA | $GIT_SHORT_SHA> | $GIT_COMMIT_AUTHOR_SUBJECT \n
+            <https://$WP_DOMAIN.admin.workpath.dev|Admin Panel> | admin@workpath.com \n
+            <https://$WP_DOMAIN.hooli.workpath.dev|Login Page> | demo+admin1@workpath.com \n
+            <https://$WP_DOMAIN.connect.workpath.dev|Connect URL> \n
+            <https://workpath.grafana.net/explore?orgId=1&left=%7B%22datasource%22:%22grafanacloud-workpath-logs%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22expr%22:%22%7Bnamespace%3D%5C%22$WP_DOMAIN%5C%22%7D%22%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D|Grafana> | Application Logs"
           }
         }
       ]

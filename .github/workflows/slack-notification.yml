@@ -52,13 +52,17 @@ jobs:
           export GIT_COMMIT_AUTHOR_SUBJECT=${{ inputs.GIT_COMMIT_AUTHOR_SUBJECT }}
           export WP_DOMAIN=${{ inputs.WP_DOMAIN }}
 
-          content=$(envsubst < ${{ inputs.payload-file-path }})
+          mkdir ./tmp
+
+          cat ${{ inputs.payload-file-path }} | tr '\n' ' ' > ./tmp/trimmed.json
+
+          content=$(envsubst < ./tmp/trimmed.json)
           # the following lines are only required for multi line json
           content="${content//'%'/'%25'}"
           content="${content//$'\n'/'%0A'}"
           content="${content//$'\r'/'%0D'}"
           # end of optional handling for multi line json
-          
+         
           echo "::set-output name=packageJson::$content"
 
       # https://github.com/alonsohki/slack-webhook-payload
