@@ -61,7 +61,7 @@ jobs:
           echo "::set-output name=packageJson::$content"
 
       - name: Test jq
-        run: jq
+        run: jq --version
 
       # https://github.com/alonsohki/slack-webhook-payload
       - uses: alonsohki/slack-webhook-payload@v1
