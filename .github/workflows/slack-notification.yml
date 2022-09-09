@@ -6,6 +6,9 @@ on:
       payload-file-path:
         type: string
         required: true
+      GIT_PROJECT_NAME:
+        type: string
+        required: true
       GIT_SHA:
         type: string
         required: true
@@ -35,7 +38,7 @@ jobs:
         id: readJson
         run: |
           export GIT_SERVER_URL=${{ github.server_url }}
-          export GIT_PROJECT_NAME
+          export GIT_PROJECT_NAME=${{ inputs.GIT_PROJECT_NAME }}
           export GIT_REPOSITORY=${{ github.repository }}
           export GIT_RUN_ID=${{ github.run_id }}
           export GIT_TRIGGERING_ACTOR=${{ github.triggering_actor }} 
