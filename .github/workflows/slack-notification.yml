@@ -74,5 +74,5 @@ jobs:
         run: |
           curl -X POST $SLACK_WEBHOOK_URL -H "Content-Type: application/json" -d '$PAYLOAD'
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.QA_SLACK_WEBHOOK }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           PAYLOAD: ${{ steps.readJson.outputs.packageJson }}
