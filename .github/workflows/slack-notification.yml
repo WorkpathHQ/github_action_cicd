@@ -56,14 +56,11 @@ jobs:
 
           envsubst < ${{ inputs.payload-file-path }} > ./tmp/substituted.json
          
-          jq -c . substitued.json > ./tmp/oneline.json
+          jq -c . substituted.json > ./tmp/oneline.json
 
           content=$(cat ./tmp/oneline.json)
 
           echo "::set-output name=packageJson::$content"
-
-      - name: Test jq
-        run: jq --version
 
       # https://github.com/alonsohki/slack-webhook-payload
       - uses: alonsohki/slack-webhook-payload@v1
