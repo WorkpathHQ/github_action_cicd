@@ -54,9 +54,10 @@ jobs:
 
           mkdir ./tmp
 
-          cat ${{ inputs.payload-file-path }} | tr '\n' ' ' > ./tmp/trimmed.json
+          cat ${{ inputs.payload-file-path }} | awk '{$1=$1};1' | tr '\n' ' ' > ./tmp/trimmed.json
 
-          content=$(envsubst << ./tmp/trimmed.json)
+          content=$(envsubst < ./tmp/trimmed.json)
+
           # the following lines are only required for multi line json
           content="${content//'%'/'%25'}"
           content="${content//$'\n'/'%0A'}"
