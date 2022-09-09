@@ -69,7 +69,7 @@ jobs:
 
       - name: Send Json via curl
         run: | 
-          curl -X POST $SLACK_WEBHOOK_URL -H "Content-Type: application/json" -d ${{ env.content }}'
+          curl -X POST $SLACK_WEBHOOK_URL -H "Content-Type: application/json" -d ${{ env.content }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           content: ${{ steps.readJson.outputs.packageJson }}
