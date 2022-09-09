@@ -54,11 +54,11 @@ jobs:
 
           mkdir ./tmp
 
-          cat ./payloads/payloadText.txt | tr '\n' '' > ./tmp/trimmed.txt
+          cat ./payloads/payloadText.txt | tr '\n' ' ' > ./tmp/trimmed.txt
 
           export TEXT=$(envsubst < ./tmp/trimmed.txt)
 
-          content= $(envsubst < ./payloads/qa_payload.json)
+          content=$(envsubst < ./payloads/qa_payload.json)
 
           echo "::set-output name=packageJson::$content"
 
