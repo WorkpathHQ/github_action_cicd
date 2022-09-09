@@ -72,7 +72,7 @@ jobs:
 
       - name: Send custom JSON data to Slack workflow
         run: |
-          curl -X POST $SLACK_WEBHOOK_URL -H "Content-Type: application/json" -d ''
+          curl -X POST $SLACK_WEBHOOK_URL -H "Content-Type: application/json" -d '$PAYLOAD'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.QA_SLACK_WEBHOOK }}
           PAYLOAD: ${{ steps.readJson.outputs.packageJson }}
