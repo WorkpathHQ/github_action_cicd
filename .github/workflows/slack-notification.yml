@@ -55,7 +55,7 @@ jobs:
           mkdir ./tmp
           # awk removes the indents
           # tr removes the newlines but somehow leaves '\n'
-          cat ${{ inputs.payload-file-path }} | awk '{$1=$1};1' | tr '\n' ' ' > ./tmp/trimmed.json
+          cat $FILE_PATH | awk '{$1=$1};1' | tr '\n' ' ' > ./tmp/trimmed.json
 
           content=$(envsubst < ./tmp/trimmed.json)
           rm -r ./tmp
