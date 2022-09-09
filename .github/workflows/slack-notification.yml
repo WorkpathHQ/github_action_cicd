@@ -56,7 +56,7 @@ jobs:
 
           envsubst < ${{ inputs.payload-file-path }} > ./tmp/substituted.json
          
-          jq -c . substituted.json > ./tmp/oneline.json
+          jq -c . ./tmp/substituted.json > ./tmp/oneline.json
 
           content=$(cat ./tmp/oneline.json)
 
