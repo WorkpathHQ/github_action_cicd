@@ -54,7 +54,7 @@ jobs:
 
           mkdir ./tmp
 
-          cat ${{ github.workspace }}/github_action_cicd/payloadText.txt | tr '\n' ' ' > ./tmp/trimmed.txt
+          cat ${{ github.workspace }}/github_action_cicd/payloads/payloadText.txt | tr '\n' ' ' > ./tmp/trimmed.txt
 
           echo $(cat ./tmp/trimmed.txt)
 
