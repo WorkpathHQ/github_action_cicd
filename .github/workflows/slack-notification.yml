@@ -52,18 +52,16 @@ jobs:
           export GIT_COMMIT_AUTHOR_SUBJECT=${{ inputs.GIT_COMMIT_AUTHOR_SUBJECT }}
           export WP_DOMAIN=${{ inputs.WP_DOMAIN }}
 
-          # cat ${{ github.workspace }}/github_action_cicd/payloads/payloadText.txt | tr '\n' ' ' > ./tmp/trimmed.txt
-
-          # export TEXT=$(envsubst < ./tmp/trimmed.txt)
-
-          # content=$(envsubst < ${{ inputs.payload-file-path }})
-
-          # echo $content
 
           content=$(envsubst < ${{ inputs.payload-file-path }})
+          
+          echo "::set-output name=packageJson::$content"
 
-          curl -X POST $SLACK_WEBHOOK_URL -H "Content-Type: application/json" -d '$content'
+      # https://github.com/alonsohki/slack-webhook-payload
+      - uses: alonsohki/slack-webhook-payload@v1
+        with:
+          slack-webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          content: ${{ steps.readJson.outputs.packageJson }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
-
+          WP_DOMAIN: workpath.dev
