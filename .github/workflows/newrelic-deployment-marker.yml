@@ -32,7 +32,7 @@ jobs:
             -d \
           '{
             "deployment": {
-              "revision": "${{ imputs.GIT_SHA }}",
+              "revision": "${{ inputs.GIT_SHA }}",
               "changelog": "${{ inputs.GIT_PROJECT_NAME }} ${{ inputs.GIT_COMMIT_AUTHOR_SUBJECT }}",
               "description": "${{ inputs.GIT_PROJECT_NAME }} ${{ inputs.GIT_COMMIT_AUTHOR_SUBJECT }}",
               "user": "${{ github.actor }}"
