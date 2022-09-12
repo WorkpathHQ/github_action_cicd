@@ -1,0 +1,40 @@
+name: New Relic deployment marker
+
+on: 
+  workflow_call:
+    inputs:
+      APP_ID:
+        type: string
+        required: true
+      GIT_SHA:
+        type: string
+        required: true
+      GIT_PROJECT_NAME:
+        type: string
+        required: true
+      GIT_COMMIT_AUTHOR_SUBJECT:
+        type: string
+        required: true
+    secrets:
+      NEWRELIC_API_KEY:
+        required: true
+
+jobs:
+  new_relic_deployment:
+    name: Send Slack notification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post New Relic deployment marker
+        run: |
+          curl -X POST 'https://api.newrelic.com/v2/applications/${{ inputs.APP_ID }}/deployments.json' \
+            -H 'Api-Key:${{ secrets.NEWRELIC_API_KEY }}' -i \
+            -H 'Content-Type: application/json' \
+            -d \
+          '{
+            "deployment": {
+              "revision": "${{ imputs.GIT_SHA }}",
+              "changelog": "${{ inputs.GIT_PROJECT_NAME }} ${{ inputs.GIT_COMMIT_AUTHOR_SUBJECT }}",
+              "description": "${{ inputs.GIT_PROJECT_NAME }} ${{ inputs.GIT_COMMIT_AUTHOR_SUBJECT }}",
+              "user": "${{ github.actor }}"
+            }
+          }' 

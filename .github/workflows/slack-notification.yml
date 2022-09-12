@@ -37,8 +37,6 @@ jobs:
           path: ${{ github.workspace }}/github_action_cicd
           ref: slacktest
 
-      
-
       - name: readJson
         id: readJson
         run: |
