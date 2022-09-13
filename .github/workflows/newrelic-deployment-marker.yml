@@ -21,7 +21,7 @@ on:
 
 jobs:
   new_relic_deployment:
-    name: Send Slack notification
+    name: Post NewRelic deployment Marker
     runs-on: ubuntu-latest
     steps:
       - name: Post New Relic deployment marker
