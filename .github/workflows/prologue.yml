@@ -42,21 +42,22 @@ jobs:
         id: vars
         # Added condition to differentiate the trigger of the workflow ('workflow_dispatch', 'pull_request')
         run: |
+          cd ${{ github.workspace }}
+          git fetch
           GIT_PROJECT_NAME=${{ github.event.repository.name }}
           if [ ${{ github.event_name }} == "pull_request" ]; then
             GIT_REFERENCE=${{ github.head_ref }}
             GIT_SHA=${{ github.event.pull_request.base.sha }}
+            git checkout master
           else 
             GIT_REFERENCE=${{ github.ref }}
             GIT_SHA=${{ github.sha }}
+            git checkout $GIT_SHA
           fi
           GIT_BRANCH=$(echo ${GIT_REFERENCE#refs/heads/})
           GIT_SHORTENED_BRANCH=$(echo "$GIT_BRANCH" | tr '[:upper:]' '[:lower:]' | sed "s/\//-/g" | sed "s/\_/-/g" | sed "s/\./-/g" | cut -c1-54 | sed 's/\(.*\)-/\1/')
           GIT_SHORT_SHA=$(echo $GIT_SHA | cut -c1-7)
           WP_SUBDOMAIN="$GIT_SHORTENED_BRANCH-$GIT_SHORT_SHA"
-          cd ${{ github.workspace }}
-          git fetch
-          git checkout $GIT_SHA
           GIT_COMMIT_AUTHOR_SUBJECT=$(git show -s --format='%an %s')
           echo "::set-output name=git_project_name::$GIT_PROJECT_NAME"
           echo "::set-output name=git_branch::$GIT_BRANCH"
