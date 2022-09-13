@@ -65,7 +65,7 @@ jobs:
          
           echo "::set-output name=packageJson::$content"
 
-      - name: Send Json via curl
+      - name: Send Slack notification
         run: | 
           curl -X POST $SLACK_WEBHOOK_URL -H "Content-Type: application/json" -d '${{ steps.readJson.outputs.packageJson }}'
         env:
