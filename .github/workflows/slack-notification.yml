@@ -47,12 +47,12 @@ jobs:
           export GIT_TRIGGERING_ACTOR=${{ github.triggering_actor }} 
           export GIT_SHA=${{ inputs.GIT_SHA }}
           export GIT_SHORT_SHA=$(echo $GIT_SHA | cut -c1-7)
-          export GIT_COMMIT_AUTHOR_SUBJECT=${{ inputs.GIT_COMMIT_AUTHOR_SUBJECT }}
+          export GIT_COMMIT_AUTHOR_SUBJECT="${{ inputs.GIT_COMMIT_AUTHOR_SUBJECT }}"
           export WP_DOMAIN=${{ inputs.WP_DOMAIN }}
           FILE_PATH=${{ github.workspace }}/github_action_cicd/payloads/${{ inputs.payload-file-name }}
           mkdir ./tmp
           # awk removes the indents
-          # tr removes the newlines but somehow leaves '\n'
+          # tr removes the newlines but leaves '\n'
           cat $FILE_PATH | awk '{$1=$1};1' | tr '\n' ' ' > ./tmp/trimmed.json
 
           content=$(envsubst < ./tmp/trimmed.json)
