@@ -53,6 +53,8 @@ on:
         required: false
       DB_MASTER_PASSWORD:
         required: false
+      HUBSPOT_WORKPATH_ACCESS_TOKEN:
+        required: true
 
 env: 
   WP_K8S_VERSION: v0.4.8
@@ -115,3 +117,4 @@ jobs:
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           DB_MASTER_PASSWORD: ${{ secrets.DB_MASTER_PASSWORD }}
+          HUBSPOT_WORKPATH_ACCESS_TOKEN: ${{ secrets.HUBSPOT_WORKPATH_ACCESS_TOKEN }}
