@@ -82,7 +82,7 @@ jobs:
       - name: Get correct K8S version
         id: k8sVersion
         run: |
-          k8sVersion = ${{ inputs.WP_K8S_VERSION }}
+          k8sVersion=${{ inputs.WP_K8S_VERSION }}
           echo "::set-output name=k8sVersion::${k8sVersion:=${{ env.WP_K8S_VERSION }}}"
           
       - name: Clone workpath_k8s repository
