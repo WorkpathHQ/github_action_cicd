@@ -79,7 +79,8 @@ jobs:
         run: |
           aws eks --region ${{ env.AWS_DEFAULT_REGION }} update-kubeconfig --name ${{ inputs.EKS_CLUSTER }}
 
-      - name: Get correct K8S version
+      - name: Replace k8s Version when provided
+        # Added so a k8s version can be optionally chosen. If no k8s version is provided in the inputs, uses the version in env.
         id: k8sVersion
         run: |
           k8sVersion=${{ inputs.WP_K8S_VERSION }}
