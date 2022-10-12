@@ -52,7 +52,7 @@ jobs:
           export GIT_SHORT_SHA=$(echo $GIT_SHA | cut -c1-7)
           export GIT_COMMIT_AUTHOR_SUBJECT="${{ inputs.GIT_COMMIT_AUTHOR_SUBJECT }}"
           export WP_DOMAIN=${{ inputs.WP_DOMAIN }}
-          export GIT_SHORTENED_BRANCH=${{ inputs.GIT_GIT_SHORTENED_BRANCH_BRANCH }}
+          export GIT_SHORTENED_BRANCH=${{ inputs.GIT_GIT_SHORTENED_BRANCH }}
           FILE_PATH=${{ github.workspace }}/github_action_cicd/payloads/${{ inputs.payload-file-name }}
           mkdir ./tmp
           # awk removes the indents
