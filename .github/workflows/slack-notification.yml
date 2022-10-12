@@ -35,7 +35,7 @@ jobs:
           repository: WorkpathHQ/github_action_cicd
           token: ${{ secrets.GIT_ACCESS_TOKEN }}
           path: ${{ github.workspace }}/github_action_cicd
-          ref: slacktest
+          ref: INFRA-553-fix-links
 
       - name: readJson
         id: readJson
