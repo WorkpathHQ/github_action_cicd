@@ -96,7 +96,7 @@ jobs:
         run: |
           cd ${{ github.workspace }}/workpath_k8s/workpath_app
           ./envsubst-multi.sh && source ./envsubst-multi.sh
-          echo "$(tr '[:lower:]' '[:upper:]' <<< ${{ inputs.WP_ENVIRONMENT }}) env will be reachable via $WP_SUBDOMAIN.$WP_DOMAIN, $WP_SUBDOMAIN.$WP_DOMAIN, $WP_SUBDOMAIN.$WP_DOMAIN"
+          echo "$(tr '[:lower:]' '[:upper:]' <<< ${{ inputs.WP_ENVIRONMENT }}) env will be reachable via $WP_SUBDOMAIN.admin.$WP_DOMAIN, $WP_SUBDOMAIN.api.$WP_DOMAIN, $WP_SUBDOMAIN.hooli.$WP_DOMAIN"
           if [ ${{ inputs.WP_ENVIRONMENT }} == qa ]; then
             kubectl apply -k overlays/${{ inputs.WP_ENVIRONMENT }}
             kubectl rollout status deploy workpath-web -n $WP_SUBDOMAIN --timeout=0s
@@ -106,7 +106,7 @@ jobs:
             kubectl -n workpath-staging rollout restart deployment workpath-web
             kubectl -n workpath-staging rollout status deploy workpath-web --timeout=0s
           fi
-          echo "Succesful Deploy on $(tr '[:lower:]' '[:upper:]' <<< {{ inputs.WP_ENVIRONMENT }}), reachable via admin.$WP_DOMAIN, api.$WP_DOMAIN, connect.$WP_DOMAIN, *.$WP_DOMAIN"
+          echo "Succesful Deploy on $(tr '[:lower:]' '[:upper:]' <<< {{ inputs.WP_ENVIRONMENT }}), reachable via $WP_SUBDOMAIN.admin.$WP_DOMAIN, $WP_SUBDOMAIN.api.$WP_DOMAIN, $WP_SUBDOMAIN.connect.$WP_DOMAIN, *.$WP_DOMAIN"
           
         # Workaround for setting inputs as environmental variables (https://github.com/actions/runner/issues/665#issuecomment-699481628)
         env:
