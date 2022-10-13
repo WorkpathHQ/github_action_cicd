@@ -17,7 +17,7 @@ on:
         required: true
       GIT_SHORTENED_BRANCH:
         type: string
-        required: true
+        required: false
       WP_DOMAIN: 
         type: string
         required: true
