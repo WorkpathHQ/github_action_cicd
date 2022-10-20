@@ -1,6 +1,6 @@
-name: Base Deploy 
+name: Base Deploy
 
-on: 
+on:
   workflow_call:
     inputs:
       AWS_ACCESS_KEY_ID_S3:
@@ -43,7 +43,7 @@ on:
       AWS_SECRET_ACCESS_KEY:
         required: true
       AWS_SECRET_ACCESS_KEY_S3:
-        required: true     
+        required: true
       RAILS_MASTER_KEY:
         required: true
       REDIS_PASSWORD:
@@ -54,13 +54,17 @@ on:
         required: true
       SMTP_PASSWORD:
         required: false
+      FONTAWESOME_TOKEN:
+        required: false
+      BAUKASTEN_TOKEN:
+        required: false
 
 
-env: 
+env:
   WP_K8S_VERSION: v0.4.14
   AWS_DEFAULT_REGION: eu-central-1
 
-jobs:     
+jobs:
   base_deploy:
     name: Deploy
     runs-on: ubuntu-latest
@@ -75,7 +79,7 @@ jobs:
       - name: Set EKS context for Kubectl
         run: |
           aws eks --region ${{ env.AWS_DEFAULT_REGION }} update-kubeconfig --name ${{ inputs.EKS_CLUSTER }}
-          
+
       - name: Replace k8s Version when provided
         # Added so a k8s version can be optionally chosen. If no k8s version is provided in the inputs, uses the version in env.
         id: k8sVersion
@@ -101,13 +105,13 @@ jobs:
             kubectl apply -k overlays/${{ inputs.WP_ENVIRONMENT }}
             kubectl rollout status deploy workpath-web -n $WP_SUBDOMAIN --timeout=0s
             kubectl rollout status deploy workpath-api -n $WP_SUBDOMAIN --timeout=300s
-          else 
+          else
             kubectl apply -k overlays/staging --selector "app in (workpath-ns, workpath-web)"
             kubectl -n workpath-staging rollout restart deployment workpath-web
             kubectl -n workpath-staging rollout status deploy workpath-web --timeout=0s
           fi
           echo "Succesful Deploy on $(tr '[:lower:]' '[:upper:]' <<< {{ inputs.WP_ENVIRONMENT }}), reachable via $WP_SUBDOMAIN.admin.$WP_DOMAIN, $WP_SUBDOMAIN.api.$WP_DOMAIN, $WP_SUBDOMAIN.connect.$WP_DOMAIN, *.$WP_DOMAIN"
-          
+
         # Workaround for setting inputs as environmental variables (https://github.com/actions/runner/issues/665#issuecomment-699481628)
         env:
           PROJECT_NAME: ${{ inputs.PROJECT_NAME }}
