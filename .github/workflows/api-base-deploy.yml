@@ -86,7 +86,8 @@ jobs:
         id: k8sVersion
         run: |
           k8sVersion=${{ inputs.WP_K8S_VERSION }}
-          echo "::set-output name=k8sVersion::${k8sVersion:=${{ env.WP_K8S_VERSION }}}"
+          echo "k8sVersion=${k8sVersion:=${{ env.WP_K8S_VERSION }}}" >> $GITHUB_OUTPUT
+          # echo "::set-output name=k8sVersion::${k8sVersion:=${{ env.WP_K8S_VERSION }}}"
           
       - name: Clone workpath_k8s repository
         uses: actions/checkout@v3
