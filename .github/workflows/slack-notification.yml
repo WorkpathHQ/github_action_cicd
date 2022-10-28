@@ -38,6 +38,7 @@ jobs:
           repository: WorkpathHQ/github_action_cicd
           token: ${{ secrets.GIT_ACCESS_TOKEN }}
           path: ${{ github.workspace }}/github_action_cicd
+          ref: INFRA-555-fix-deprecated-functionalities
 
       - name: readJson
         id: readJson
