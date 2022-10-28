@@ -1,0 +1,16 @@
+{
+    "attachments": [{
+      "color": "#f75819",
+      "blocks": [
+        {
+          "type": "section",
+          "text": {
+            "type": "mrkdwn",
+            "text": "
+            *'$GIT_PROJECT_NAME'*\n
+            $GIT_TRIGGERING_ACTOR's deployment failed - <$GIT_SERVER_URL/$GIT_REPOSITORY/commit/$GIT_SHA | $GIT_SHORT_SHA> | $GIT_COMMIT_AUTHOR_SUBJECT\n"
+          }
+        }
+      ]
+    }]
+  }
