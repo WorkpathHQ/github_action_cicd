@@ -9,8 +9,8 @@
                         "type": "mrkdwn",
                         "text": " 
                         *'$GIT_PROJECT_NAME'*\n
-                        $GIT_TRIGGERING_ACTOR\'s <$GIT_SERVER_URL/$GIT_REPOSITORY/actions/runs/$GIT_RUN_ID | deployment> by $GIT_TRIGGERING_ACTOR failed\n
-                        <$GIT_SERVER_URL/$GIT_REPOSITORY/commit/$GIT_SHA | $GIT_SHORT_SHA>"
+                        <$GIT_SERVER_URL/$GIT_REPOSITORY/actions/runs/$GIT_RUN_ID | deployment> by $GIT_TRIGGERING_ACTOR failed\n
+                        <$GIT_SERVER_URL/$GIT_REPOSITORY/commit/$GIT_SHA | $GIT_SHORT_SHA> | $GIT_COMMIT_AUTHOR_SUBJECT"
                     }
                 }
             ]
