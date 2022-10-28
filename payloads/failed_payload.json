@@ -10,7 +10,8 @@
                         "text": " 
                         *'$GIT_PROJECT_NAME'*\n
                         $GIT_TRIGGERING_ACTOR's deployment failed\n
-                        <$GIT_SERVER_URL/$GIT_REPOSITORY/commit/$GIT_SHA | $GIT_SHORT_SHA> "
+                        <$GIT_SERVER_URL/$GIT_REPOSITORY/commit/$GIT_SHA | $GIT_SHORT_SHA> 
+                        test"
                     }
                 }
             ]
