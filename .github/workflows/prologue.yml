@@ -59,11 +59,12 @@ jobs:
           GIT_SHORT_SHA=$(echo $GIT_SHA | cut -c1-7)
           WP_SUBDOMAIN="$GIT_SHORTENED_BRANCH-$GIT_SHORT_SHA"
           GIT_COMMIT_AUTHOR_SUBJECT=$(git show -s --format='%an %s')
-          echo "::set-output name=git_project_name::$GIT_PROJECT_NAME"
-          echo "::set-output name=git_branch::$GIT_BRANCH"
-          echo "::set-output name=git_shortened_branch::$GIT_SHORTENED_BRANCH"
-          echo "::set-output name=git_sha::$GIT_SHA"
-          echo "::set-output name=git_short_sha::$GIT_SHORT_SHA"
-          echo "::set-output name=wp_subdomain::$WP_SUBDOMAIN"
-          echo "::set-output name=git_commit_author_subject::$GIT_COMMIT_AUTHOR_SUBJECT"
+          echo "git_project_name=$GIT_PROJECT_NAME" >> $GITHUB_OUTPUT
+          echo "git_branch=$GIT_BRANCH" >> $GITHUB_OUTPUT
+          echo "git_shortened_branch=$GIT_SHORTENED_BRANCH" >> $GITHUB_OUTPUT
+          echo "git_sha=$GIT_SHA" >> $GITHUB_OUTPUT
+          echo "git_short_sha=$GIT_SHORT_SHA" >> $GITHUB_OUTPUT
+          echo "wp_subdomain=$WP_SUBDOMAIN" >> $GITHUB_OUTPUT
+          echo "git_commit_author_subject=$GIT_COMMIT_AUTHOR_SUBJECT" >> $GITHUB_OUTPUT
+          
       
