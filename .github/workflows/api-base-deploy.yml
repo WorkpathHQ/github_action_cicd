@@ -107,8 +107,8 @@ jobs:
           if [ ${{ inputs.WP_ENVIRONMENT }} == qa ]; then
             kubectl rollout status deploy workpath-api -n $WP_SUBDOMAIN --timeout=400s
           else 
-            kubectl -n workpath-staging rollout restart deployment workpath-api workpath-cronjobs workpath-sidekiq workpath-sidekiq-graph workpath-sidekiq-integrations
-            kubectl -n workpath-staging rollout status deploy workpath-api --timeout=900s
+            kubectl -n workpath-${{ inputs.WP_ENVIRONMENT }} rollout restart deployment workpath-api workpath-cronjobs workpath-sidekiq workpath-sidekiq-graph workpath-sidekiq-integrations
+            kubectl -n workpath-${{ inputs.WP_ENVIRONMENT }} rollout status deploy workpath-api --timeout=900s
           fi
 
           echo "Succesful Deploy on $(tr '[:lower:]' '[:upper:]' <<< {{ inputs.WP_ENVIRONMENT }}), reachable via $WP_SUBDOMAIN.admin.$WP_DOMAIN, $WP_SUBDOMAIN.api.$WP_DOMAIN, $WP_SUBDOMAIN.connect.$WP_DOMAIN, *.$WP_DOMAIN"

@@ -64,7 +64,6 @@ jobs:
   base_deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    environment: ${{ inputs.WP_ENVIRONMENT }}
     steps:
       - uses: aws-actions/configure-aws-credentials@v1-node16
         with:
@@ -103,9 +102,9 @@ jobs:
             kubectl rollout status deploy workpath-web -n $WP_SUBDOMAIN --timeout=0s
             kubectl rollout status deploy workpath-api -n $WP_SUBDOMAIN --timeout=300s
           else 
-            kubectl apply -k overlays/staging --selector "app in (workpath-ns, workpath-web)"
-            kubectl -n workpath-staging rollout restart deployment workpath-web
-            kubectl -n workpath-staging rollout status deploy workpath-web --timeout=0s
+            kubectl apply -k overlays/${{ inputs.WP_ENVIRONMENT }} --selector "app in (workpath-ns, workpath-web)"
+            kubectl -n workpath-${{ inputs.WP_ENVIRONMENT }} rollout restart deployment workpath-web
+            kubectl -n workpath-${{ inputs.WP_ENVIRONMENT }} rollout status deploy workpath-web --timeout=0s
           fi
           echo "Succesful Deploy on $(tr '[:lower:]' '[:upper:]' <<< {{ inputs.WP_ENVIRONMENT }}), reachable via $WP_SUBDOMAIN.admin.$WP_DOMAIN, $WP_SUBDOMAIN.api.$WP_DOMAIN, $WP_SUBDOMAIN.connect.$WP_DOMAIN, *.$WP_DOMAIN"
           

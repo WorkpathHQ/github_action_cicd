@@ -30,6 +30,9 @@ on:
       CYPRESS_WORKPATH_ACCOUNT:
         type: string
         required: true
+      WP_ENVIRONMENT:
+        type: string
+        required: false
 
     secrets:
       AWS_ACCESS_KEY_ID:
@@ -53,6 +56,7 @@ jobs:
   base_build_image:
     name: Build image
     runs-on: ubuntu-latest
+    environment: ${{ inputs.WP_ENVIRONMENT }}
     steps:
       - name: Check out code
         uses: actions/checkout@v3
