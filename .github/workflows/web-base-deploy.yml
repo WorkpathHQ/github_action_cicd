@@ -64,7 +64,6 @@ jobs:
   base_deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    environment: ${{ inputs.WP_ENVIRONMENT }}
     steps:
       - uses: aws-actions/configure-aws-credentials@v1-node16
         with:
