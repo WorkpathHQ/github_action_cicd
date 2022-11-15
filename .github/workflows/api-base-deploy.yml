@@ -1,6 +1,6 @@
-name: Base Deploy 
+name: Base Deploy
 
-on: 
+on:
   workflow_call:
     inputs:
       AWS_ACCESS_KEY_ID_S3:
@@ -43,7 +43,7 @@ on:
       AWS_SECRET_ACCESS_KEY:
         required: true
       AWS_SECRET_ACCESS_KEY_S3:
-        required: true     
+        required: true
       RAILS_MASTER_KEY:
         required: true
       REDIS_PASSWORD:
@@ -58,14 +58,14 @@ on:
         required: false
       HUBSPOT_WORKPATH_ACCESS_TOKEN:
         required: true
-      TABLEAU_CREDENTIAL:
+      TABLEAU_ADMIN_PASSWORD:
         required: true
 
-env: 
+env:
   WP_K8S_VERSION: v0.4.14
   AWS_DEFAULT_REGION: eu-central-1
 
-jobs:     
+jobs:
   base_deploy:
     name: Deploy
     runs-on: ubuntu-latest
@@ -88,7 +88,7 @@ jobs:
           k8sVersion=${{ inputs.WP_K8S_VERSION }}
           echo "k8sVersion=${k8sVersion:=${{ env.WP_K8S_VERSION }}}" >> $GITHUB_OUTPUT
           # echo "::set-output name=k8sVersion::${k8sVersion:=${{ env.WP_K8S_VERSION }}}"
-          
+
       - name: Clone workpath_k8s repository
         uses: actions/checkout@v3
         with:
@@ -106,13 +106,13 @@ jobs:
           kubectl apply -k overlays/${{ inputs.WP_ENVIRONMENT }}
           if [ ${{ inputs.WP_ENVIRONMENT }} == qa ]; then
             kubectl rollout status deploy workpath-api -n $WP_SUBDOMAIN --timeout=400s
-          else 
+          else
             kubectl -n workpath-${{ inputs.WP_ENVIRONMENT }} rollout restart deployment workpath-api workpath-cronjobs workpath-sidekiq workpath-sidekiq-graph workpath-sidekiq-integrations
             kubectl -n workpath-${{ inputs.WP_ENVIRONMENT }} rollout status deploy workpath-api --timeout=900s
           fi
 
           echo "Succesful Deploy on $(tr '[:lower:]' '[:upper:]' <<< {{ inputs.WP_ENVIRONMENT }}), reachable via $WP_SUBDOMAIN.admin.$WP_DOMAIN, $WP_SUBDOMAIN.api.$WP_DOMAIN, $WP_SUBDOMAIN.connect.$WP_DOMAIN, *.$WP_DOMAIN"
-          
+
         # Workaround for setting inputs as environmental variables (https://github.com/actions/runner/issues/665#issuecomment-699481628)
         env:
           PROJECT_NAME: ${{ inputs.PROJECT_NAME }}
@@ -131,4 +131,4 @@ jobs:
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           DB_MASTER_PASSWORD: ${{ secrets.DB_MASTER_PASSWORD }}
           HUBSPOT_WORKPATH_ACCESS_TOKEN: ${{ secrets.HUBSPOT_WORKPATH_ACCESS_TOKEN }}
-          TABLEAU_CREDENTIAL: ${{ secrets.TABLEAU_CREDENTIAL }}
+          TABLEAU_ADMIN_PASSWORD: ${{ secrets.TABLEAU_ADMIN_PASSWORD }}
