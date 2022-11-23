@@ -1,4 +1,4 @@
-# Fixes [PLAT-123](https://workpathhq.atlassian.net/browse/PLAT-123)
+# Fixes [JIRA_ID](https://workpathhq.atlassian.net/browse/JIRA_ID)
 
 ## Summary
 
