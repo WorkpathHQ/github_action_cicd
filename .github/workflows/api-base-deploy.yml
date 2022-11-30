@@ -88,8 +88,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
 
       - id: latest_release_tag
-        run: latestReleaseTag=$(echo $RESULT | jq | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/')
+        run: |
+          latestReleaseTag=$(echo $RESULT | jq | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/')
           echo "latest_release_tag=$latestReleaseTag" >> $GITHUB_OUTPUT
+        env:
+          RESULT: ${{ steps.get_latest_release.outputs.data }}
 
       - name: Replace k8s Version when provided
         # Added so a k8s version can be optionally chosen. If no k8s version is provided in the inputs, uses the version in env.
