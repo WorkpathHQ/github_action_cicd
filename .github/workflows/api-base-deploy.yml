@@ -96,7 +96,7 @@ jobs:
           ref: ${{ steps.k8sVersion.outputs.k8sVersion }}
           token: ${{ secrets.GIT_ACCESS_TOKEN }}
           path: ${{ github.workspace }}/workpath_k8s
-          fetch-dept: 0
+          fetch-depth: 0
 
       - name: Deploying
         # Added if else to differentiate between the environments
