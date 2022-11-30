@@ -87,14 +87,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
 
-      - run: latestReleaseTag=$(echo $RESULT | jq | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/')
+      - id: latest_release_tag
+        run: latestReleaseTag=$(echo $RESULT | jq | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/')
+          echo "latest_release_tag=$latestReleaseTag" >> $GITHUB_OUTPUT
 
       - name: Replace k8s Version when provided
         # Added so a k8s version can be optionally chosen. If no k8s version is provided in the inputs, uses the version in env.
         id: k8sVersion
         run: |
           k8sVersion=${{ inputs.WP_K8S_VERSION }}
-          echo "k8sVersion=${k8sVersion:=$latestReleaseTag}" >> $GITHUB_OUTPUT
+          echo "k8sVersion=${k8sVersion:=${{ jobs.latest_release_tag.outputs.latest_release_tag }}}" >> $GITHUB_OUTPUT
         
 
       - name: Clone workpath_k8s repository
