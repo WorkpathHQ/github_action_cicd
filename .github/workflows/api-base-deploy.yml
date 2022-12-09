@@ -48,6 +48,12 @@ on:
         required: true
       REDIS_PASSWORD:
         required: true
+      SIDEKIQ_CACHE_PASSWORD:
+        required: true
+      FRAGMENT_CACHE_PASSWORD:
+        required: true
+      FLIPPER_CACHE_PASSWORD:
+        required: true
       DATABASE_PASSWORD:
         required: true
       GIT_ACCESS_TOKEN:
