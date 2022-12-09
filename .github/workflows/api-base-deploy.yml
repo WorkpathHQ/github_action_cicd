@@ -124,6 +124,7 @@ jobs:
           echo "$(tr '[:lower:]' '[:upper:]' <<< ${{ inputs.WP_ENVIRONMENT }}) env will be reachable via $WP_SUBDOMAIN.admin.$WP_DOMAIN, $WP_SUBDOMAIN.api.$WP_DOMAIN, $WP_SUBDOMAIN.hooli.$WP_DOMAIN"
           kubectl apply -k overlays/${{ inputs.WP_ENVIRONMENT }}
           if [ ${{ inputs.WP_ENVIRONMENT }} == qa ]; then
+            echo $SIDEKIQ_CACHE_PASSWORD
             kubectl rollout status deploy workpath-api -n $WP_SUBDOMAIN --timeout=400s
           else
             kubectl -n workpath-${{ inputs.WP_ENVIRONMENT }} rollout restart deployment workpath-api workpath-cronjobs workpath-sidekiq workpath-sidekiq-graph workpath-sidekiq-integrations
