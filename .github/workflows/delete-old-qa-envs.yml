@@ -3,7 +3,7 @@ name: Delete QA namespaces when redeployed
 on:
   workflow_call:
     inputs:
-      GIT_SHORT_SHA:
+      BRANCH_NAME:
         type: string
         required: true
       EKS_CLUSTER:
@@ -35,4 +35,4 @@ jobs:
           
       - name: Delete Namespaces with Git-branch label for PR
         run: |
-          kubectl delete namespaces -l git-branch=${{ inputs.GIT_SHORT_SHA }}
+          kubectl delete namespaces -l git-branch=${{ inputs.BRANCH_NAME }}
