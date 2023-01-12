@@ -3,8 +3,16 @@ name: Delete QA namespaces when redeployed
 on:
   workflow_call:
     inputs:
-      BRANCH_TAG:
+      GIT_SHORT_SHA:
         type: string
+        required: true
+      EKS_CLUSTER:
+        type: string
+        required: true
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
         required: true
 
 env:
@@ -17,8 +25,8 @@ jobs:
     steps:
       - uses: aws-actions/configure-aws-credentials@v1-node16
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_STAGING }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGING }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
       - name: Set EKS staging context for Kubectl
@@ -27,5 +35,4 @@ jobs:
           
       - name: Delete Namespaces with Git-branch label for PR
         run: |
-          export gitLabel=$(echo $GITHUB_HEAD_REF | tr '[:upper:]' '[:lower:]' | sed "s/\//-/g" | sed "s/\_/-/g" | sed "s/\./-/g" | cut -c1-54 | sed 's/\(.*\)-/\1/')
-          kubectl delete namespaces -l git-branch=$gitLabel
+          kubectl delete namespaces -l git-branch=${{ inputs.GIT_SHORT_SHA }}
