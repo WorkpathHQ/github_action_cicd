@@ -35,5 +35,5 @@ jobs:
           
       - name: Delete Namespaces with Git-branch label for PR
         run: |
-          export gitLabel=$(echo $TAG | tr '[:upper:]' '[:lower:]' | sed "s/\//-/g" | sed "s/\_/-/g" | sed "s/\./-/g" | cut -c1-54 | sed 's/\(.*\)-/\1/')
+          export gitLabel=$(echo ${{ inputs.BRANCH_NAME }} | tr '[:upper:]' '[:lower:]' | sed "s/\//-/g" | sed "s/\_/-/g" | sed "s/\./-/g" | cut -c1-54 | sed 's/\(.*\)-/\1/')
           kubectl delete namespaces -l git-branch=$gitLabel
