@@ -1,0 +1,31 @@
+name: Delete QA namespaces when redeployed
+
+on:
+  workflow_call:
+    inputs:
+      BRANCH_TAG:
+        type: string
+        required: true
+
+env:
+  AWS_DEFAULT_REGION: eu-central-1
+
+jobs:
+  delete_namespaces_from_git-branch:
+    name: Delete QA namespaces with GitBranch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_STAGING }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGING }}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+
+      - name: Set EKS staging context for Kubectl
+        run: |
+          aws eks --region ${{ env.AWS_DEFAULT_REGION }} update-kubeconfig --name wp-staging
+          
+      - name: Delete Namespaces with Git-branch label for PR
+        run: |
+          export gitLabel=$(echo $GITHUB_HEAD_REF | tr '[:upper:]' '[:lower:]' | sed "s/\//-/g" | sed "s/\_/-/g" | sed "s/\./-/g" | cut -c1-54 | sed 's/\(.*\)-/\1/')
+          kubectl delete namespaces -l git-branch=$gitLabel
