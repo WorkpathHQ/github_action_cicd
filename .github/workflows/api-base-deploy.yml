@@ -46,11 +46,7 @@ on:
         required: true
       RAILS_MASTER_KEY:
         required: true
-      SIDEKIQ_CACHE_PASSWORD:
-        required: true
-      FRAGMENT_CACHE_PASSWORD:
-        required: true
-      FLIPPER_CACHE_PASSWORD:
+      REDIS_PASSWORD:
         required: true
       DATABASE_PASSWORD:
         required: true
@@ -143,9 +139,7 @@ jobs:
           SMTP_USERNAME: ${{ inputs.SMTP_USERNAME }}
           AWS_SECRET_ACCESS_KEY_S3: ${{ secrets.AWS_SECRET_ACCESS_KEY_S3 }}
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-          SIDEKIQ_CACHE_PASSWORD: ${{ secrets.SIDEKIQ_CACHE_PASSWORD }}
-          FRAGMENT_CACHE_PASSWORD: ${{ secrets.FRAGMENT_CACHE_PASSWORD }}
-          FLIPPER_CACHE_PASSWORD: ${{ secrets.FLIPPER_CACHE_PASSWORD }}
+          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           DB_MASTER_PASSWORD: ${{ secrets.DB_MASTER_PASSWORD }}
