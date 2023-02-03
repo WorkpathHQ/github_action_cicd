@@ -58,7 +58,6 @@ WIP
 | AWS_SECRET_ACCESS_KEY | The secret access key for AWS |
 | AWS_SECRET_ACCESS_KEY_S3 | The secret access key for AWS S3 |
 | RAILS_MASTER_KEY | The Master Key for Rails |
-| REDIS_PASSWORD | The Password for Redis |
 | DATABASE_PASSWORD | The Password for the database |
 | GIT_ACCESS_TOKEN | The Token for Github Access |
 
