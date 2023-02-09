@@ -36,6 +36,16 @@ on:
       WP_K8S_VERSION:
         type: string
         required: false
+      GA_TRACKING_ID:
+        type: string
+        required: true
+      SENTRY_ENVIRONMENT:
+        type: string
+        required: true
+      SENTRY_URL:
+        type: string
+        required: true
+
 
     secrets:
       AWS_ACCESS_KEY_ID:
