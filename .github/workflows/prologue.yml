@@ -83,7 +83,7 @@ jobs:
         with:
           repository: WorkpathHQ/workpath_api
           ref: master
-          token: ${{ secrets.GIT_ACCESS_TOKEN }}
+          token: ${{ github.token }}
 
       - name: Set Output
         run: |
