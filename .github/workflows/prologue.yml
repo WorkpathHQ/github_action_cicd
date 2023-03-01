@@ -74,17 +74,17 @@ jobs:
           echo "wp_subdomain=$WP_SUBDOMAIN" >> $GITHUB_OUTPUT
           echo "git_commit_author_subject=$GIT_COMMIT_AUTHOR_SUBJECT" >> $GITHUB_OUTPUT
 
-        - name: Check out other repo
-          uses: actions/checkout@v3
-          with:
-            repository: WorkpathHQ/workpath_api
-            ref: master
-            token: ${{ secrets.GIT_ACCESS_TOKEN }}
+      - name: Check out other repo
+        uses: actions/checkout@v3
+        with:
+          repository: WorkpathHQ/workpath_api
+          ref: master
+          token: ${{ secrets.GIT_ACCESS_TOKEN }}
 
-        - name: Set Output
-          run: |
-            LATEST_SHORT_SHA=$(git rev-parse HEAD | cut -c1-7)
-            echo "wp_api_version=$WP_API_VERSION" >> $GITHUB_OUTPUT
+      - name: Set Output
+        run: |
+          LATEST_SHORT_SHA=$(git rev-parse HEAD | cut -c1-7)
+          echo "wp_api_version=$WP_API_VERSION" >> $GITHUB_OUTPUT
 
           
       
