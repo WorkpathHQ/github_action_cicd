@@ -21,6 +21,12 @@ on:
       GIT_COMMIT_AUTHOR_SUBJECT: 
         description: "Author + Last commit / PR title"
         value: ${{ jobs.prologue.outputs.GIT_COMMIT_AUTHOR_SUBJECT }}
+      WP_API_VERSION:
+        description: "Contains the current SHA of the master branch of the API repo"
+        value: ${{ jobs.prologue.outputs.WP_API_VERSION }}
+      WP_WEB_VERSION:
+        description: "Contains the current SHA of the master branch of the WEB repo"
+        value: ${{ jobs.prologue.outputs.WP_WEB_VERSION }}
 
 jobs:
   prologue:
@@ -34,6 +40,7 @@ jobs:
       GIT_SHA: ${{ steps.vars.outputs.git_sha }}
       GIT_SHORT_SHA: ${{ steps.vars.outputs.git_short_sha }}
       GIT_COMMIT_AUTHOR_SUBJECT: ${{ steps.vars.outputs.git_commit_author_subject }}
+      WP_API_VERSION: ${{ steps.vars.outputs.wp_api_version }}
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -66,5 +73,17 @@ jobs:
           echo "git_short_sha=$GIT_SHORT_SHA" >> $GITHUB_OUTPUT
           echo "wp_subdomain=$WP_SUBDOMAIN" >> $GITHUB_OUTPUT
           echo "git_commit_author_subject=$GIT_COMMIT_AUTHOR_SUBJECT" >> $GITHUB_OUTPUT
+
+        - name: Check out other repo
+          uses: actions/checkout@v3
+          with:
+          repository: WorkpathHQ/workpath_api
+          ref: master
+          token: ${{ secrets.GIT_ACCESS_TOKEN }}
+
+        - name: Set Output
+          LATEST_SHORT_SHA=$(git rev-parse HEAD | cut -c1-7)
+          echo "wp_api_version=$WP_API_VERSION" >> $GITHUB_OUTPUT
+
           
       
