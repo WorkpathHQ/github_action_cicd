@@ -81,7 +81,7 @@ jobs:
       - name: Check out other repo
         uses: actions/checkout@v3
         with:
-          repository: WorkpathHQ/workpath_api
+          repository: WorkpathHQ/workpath_k8s
           ref: master
           token: ${{ secrets.GIT_ACCESS_TOKEN }}
 
