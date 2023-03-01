@@ -77,9 +77,9 @@ jobs:
         - name: Check out other repo
           uses: actions/checkout@v3
           with:
-          repository: WorkpathHQ/workpath_api
-          ref: master
-          token: ${{ secrets.GIT_ACCESS_TOKEN }}
+            repository: WorkpathHQ/workpath_api
+            ref: master
+            token: ${{ secrets.GIT_ACCESS_TOKEN }}
 
         - name: Set Output
           run: |
