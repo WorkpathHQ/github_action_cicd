@@ -94,7 +94,6 @@ jobs:
       - id: latest_release_tag
         run: |
           latestReleaseTag=$(echo $RESULT | jq | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/')
-          echo $latestReleaseTag
           echo "latest_release_tag=$latestReleaseTag" >> $GITHUB_OUTPUT
         env:
           RESULT: ${{ steps.get_latest_release.outputs.data }}
