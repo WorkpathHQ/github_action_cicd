@@ -44,8 +44,8 @@ jobs:
       GIT_SHA: ${{ steps.vars.outputs.git_sha }}
       GIT_SHORT_SHA: ${{ steps.vars.outputs.git_short_sha }}
       GIT_COMMIT_AUTHOR_SUBJECT: ${{ steps.vars.outputs.git_commit_author_subject }}
-      WP_API_VERSION: ${{ steps.vars.outputs.wp_api_version }}
-      WP_WEB_VERSION: ${{ steps.vars.outputs.wp_web_version }}
+      WP_API_VERSION: ${{ steps.api.outputs.wp_api_version }}
+      WP_WEB_VERSION: ${{ steps.web.outputs.wp_web_version }}
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -87,9 +87,9 @@ jobs:
           token: ${{ secrets.GIT_ACCESS_TOKEN }}
 
       - name: Set Output
+        id: api
         run: |
           LATEST_SHORT_SHA=$(git rev-parse HEAD | cut -c1-7)
-          echo $LATEST_SHORT_SHA
           echo "wp_api_version=$(echo $LATEST_SHORT_SHA)" >> $GITHUB_OUTPUT
       
       - name: Get WEB SHA
@@ -100,7 +100,7 @@ jobs:
           token: ${{ secrets.GIT_ACCESS_TOKEN }}
 
       - name: Set Output
+        id: web
         run: |
           LATEST_SHORT_SHA=$(git rev-parse HEAD | cut -c1-7)
-          echo $LATEST_SHORT_SHA
           echo "wp_web_version=$(echo $LATEST_SHORT_SHA)" >> $GITHUB_OUTPUT
