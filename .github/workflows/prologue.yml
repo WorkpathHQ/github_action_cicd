@@ -90,7 +90,7 @@ jobs:
         run: |
           LATEST_SHORT_SHA=$(git rev-parse HEAD | cut -c1-7)
           echo $LATEST_SHORT_SHA
-          echo "wp_api_version=$LATEST_SHORT_SHA" >> $GITHUB_OUTPUT
+          echo "wp_api_version=$(echo $LATEST_SHORT_SHA)" >> $GITHUB_OUTPUT
       
       - name: Get WEB SHA
         uses: actions/checkout@v3
@@ -103,4 +103,4 @@ jobs:
         run: |
           LATEST_SHORT_SHA=$(git rev-parse HEAD | cut -c1-7)
           echo $LATEST_SHORT_SHA
-          echo "wp_web_version=$LATEST_SHORT_SHA" >> $GITHUB_OUTPUT
+          echo "wp_web_version=$(echo $LATEST_SHORT_SHA)" >> $GITHUB_OUTPUT
