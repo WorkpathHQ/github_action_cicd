@@ -114,7 +114,7 @@ jobs:
           sudo apt-get install -y apt-transport-https ca-certificates curl
           sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
           echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
-          sudo apt-get install -y kubectl=1.23.17-00
+          sudo apt-get install -y kubectl=1.22.9-00
           cd ${{ github.workspace }}/workpath_k8s/workpath_app
           ./envsubst-multi.sh && source ./envsubst-multi.sh
           echo "$(tr '[:lower:]' '[:upper:]' <<< ${{ inputs.WP_ENVIRONMENT }}) env will be reachable via $WP_SUBDOMAIN.admin.$WP_DOMAIN, $WP_SUBDOMAIN.api.$WP_DOMAIN, $WP_SUBDOMAIN.hooli.$WP_DOMAIN"
