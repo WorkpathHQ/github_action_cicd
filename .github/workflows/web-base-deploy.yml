@@ -1,6 +1,6 @@
-name: Base Deploy 
+name: Base Deploy
 
-on: 
+on:
   workflow_call:
     inputs:
       AWS_ACCESS_KEY_ID_S3:
@@ -43,7 +43,7 @@ on:
       AWS_SECRET_ACCESS_KEY:
         required: true
       AWS_SECRET_ACCESS_KEY_S3:
-        required: true     
+        required: true
       RAILS_MASTER_KEY:
         required: true
       SIDEKIQ_CACHE_PASSWORD:
@@ -60,10 +60,10 @@ on:
         required: false
 
 
-env: 
+env:
   AWS_DEFAULT_REGION: eu-central-1
 
-jobs:     
+jobs:
   base_deploy:
     name: Deploy
     runs-on: ubuntu-latest
@@ -77,7 +77,7 @@ jobs:
       - name: Set EKS context for Kubectl
         run: |
           aws eks --region ${{ env.AWS_DEFAULT_REGION }} update-kubeconfig --name ${{ inputs.EKS_CLUSTER }}
-          
+
       - uses: octokit/request-action@v2.x
         id: get_latest_release
         with:
@@ -110,11 +110,9 @@ jobs:
       - name: Deploying
       # Added if else to differentiate between the environments
         run: |
-          sudo apt-get update
-          sudo apt-get install -y apt-transport-https ca-certificates curl
-          sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
-          echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
-          sudo apt-get update && sudo apt-get install -y --allow-downgrades kubectl=1.23.17-00
+          curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.22.9/bin/linux/amd64/kubectl
+          chmod +x ./kubectl
+          sudo mv ./kubectl /usr/local/bin/kubectl
           cd ${{ github.workspace }}/workpath_k8s/workpath_app
           ./envsubst-multi.sh && source ./envsubst-multi.sh
           echo "$(tr '[:lower:]' '[:upper:]' <<< ${{ inputs.WP_ENVIRONMENT }}) env will be reachable via $WP_SUBDOMAIN.admin.$WP_DOMAIN, $WP_SUBDOMAIN.api.$WP_DOMAIN, $WP_SUBDOMAIN.hooli.$WP_DOMAIN"
@@ -122,13 +120,13 @@ jobs:
             kubectl apply -k overlays/${{ inputs.WP_ENVIRONMENT }}
             kubectl rollout status deploy workpath-web -n $WP_SUBDOMAIN --timeout=0s
             kubectl rollout status deploy workpath-api -n $WP_SUBDOMAIN --timeout=300s
-          else 
+          else
             kubectl apply -k overlays/${{ inputs.WP_ENVIRONMENT }} --selector "app in (workpath-ns, workpath-web)"
             kubectl -n workpath-${{ inputs.WP_ENVIRONMENT }} rollout restart deployment workpath-web
             kubectl -n workpath-${{ inputs.WP_ENVIRONMENT }} rollout status deploy workpath-web --timeout=0s
           fi
           echo "Succesful Deploy on $(tr '[:lower:]' '[:upper:]' <<< {{ inputs.WP_ENVIRONMENT }}), reachable via $WP_SUBDOMAIN.admin.$WP_DOMAIN, $WP_SUBDOMAIN.api.$WP_DOMAIN, $WP_SUBDOMAIN.connect.$WP_DOMAIN, *.$WP_DOMAIN"
-          
+
         # Workaround for setting inputs as environmental variables (https://github.com/actions/runner/issues/665#issuecomment-699481628)
         env:
           PROJECT_NAME: ${{ inputs.PROJECT_NAME }}
