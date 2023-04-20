@@ -42,8 +42,6 @@ jobs:
         id: vars
         # Added condition to differentiate the trigger of the workflow ('workflow_dispatch', 'pull_request')
         run: |
-          kustomize version
-          kubectl version
           cd ${{ github.workspace }}
           git fetch
           GIT_PROJECT_NAME=${{ github.event.repository.name }}
