@@ -104,7 +104,7 @@ jobs:
         run: |
           k8sVersion=${{ inputs.WP_K8S_VERSION }}
           echo "k8sVersion=${k8sVersion:=${{ steps.latest_release_tag.outputs.latest_release_tag }}}" >> $GITHUB_OUTPUT
-        
+
       - name: Clone workpath_k8s repository
         uses: actions/checkout@v3
         with:
@@ -120,7 +120,6 @@ jobs:
           curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.22.9/bin/linux/amd64/kubectl
           chmod +x ./kubectl
           sudo mv ./kubectl /usr/local/bin/kubectl
-          kubectl version
           cd ${{ github.workspace }}/workpath_k8s/workpath_app
           ./envsubst-multi.sh && source ./envsubst-multi.sh
           echo "$(tr '[:lower:]' '[:upper:]' <<< ${{ inputs.WP_ENVIRONMENT }}) env will be reachable via $WP_SUBDOMAIN.admin.$WP_DOMAIN, $WP_SUBDOMAIN.api.$WP_DOMAIN, $WP_SUBDOMAIN.hooli.$WP_DOMAIN"
