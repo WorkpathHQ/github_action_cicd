@@ -121,6 +121,15 @@ jobs:
           chmod +x ./kubectl
           sudo mv ./kubectl /usr/local/bin/kubectl
           cd ${{ github.workspace }}/workpath_k8s/workpath_app
+          echo AWS_SECRET_ACCESS_KEY_S3=$AWS_SECRET_ACCESS_KEY_S3 > config/aws-secret-access-key-s3.properties
+          echo RAILS_MASTER_KEY=$RAILS_MASTER_KEY > config/rails-master-key.properties
+          echo SIDEKIQ_CACHE_PASSWORD=$SIDEKIQ_CACHE_PASSWORD > config/sidekiq-cache-password.properties
+          echo FRAGMENT_CACHE_PASSWORD=$FRAGMENT_CACHE_PASSWORD > config/fragment-cache-password.properties
+          echo FLIPPER_CACHE_PASSWORD=$FLIPPER_CACHE_PASSWORD > config/flipper-cache-password.properties
+          echo DATABASE_PASSWORD=$DATABASE_PASSWORD > config/database.password.properties
+          echo DB_MASTER_PASSWORD=$DB_MASTER_PASSWORD > config/database.readonly.secret.properties
+          echo HUBSPOT_WORKPATH_ACCESS_TOKEN=$HUBSPOT_WORKPATH_ACCESS_TOKEN > config/hubspot-workpath-access-token.properties
+          echo TABLEAU_ADMIN_PASSWORD=$TABLEAU_ADMIN_PASSWORD > config/tableau-credential.properties
           ./envsubst-multi.sh && source ./envsubst-multi.sh
           echo "$(tr '[:lower:]' '[:upper:]' <<< ${{ inputs.WP_ENVIRONMENT }}) env will be reachable via $WP_SUBDOMAIN.admin.$WP_DOMAIN, $WP_SUBDOMAIN.api.$WP_DOMAIN, $WP_SUBDOMAIN.hooli.$WP_DOMAIN"
           kubectl apply -k overlays/${{ inputs.WP_ENVIRONMENT }}
