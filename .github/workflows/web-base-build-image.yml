@@ -56,7 +56,6 @@ jobs:
   base_build_image:
     name: Build image
     runs-on: 8-cores
-    environment: ${{ inputs.WP_ENVIRONMENT }}
     steps:
       - name: Check out code
         uses: actions/checkout@v3
