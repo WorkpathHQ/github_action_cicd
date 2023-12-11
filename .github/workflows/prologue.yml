@@ -58,7 +58,7 @@ jobs:
           GIT_SHORTENED_BRANCH=$(echo "$GIT_BRANCH" | tr '[:upper:]' '[:lower:]' | sed "s/\//-/g" | sed "s/\_/-/g" | sed "s/\./-/g" | cut -c1-54 | sed 's/\(.*\)-/\1/')
           GIT_SHORT_SHA=$(echo $GIT_SHA | cut -c1-7)
           WP_SUBDOMAIN="$GIT_SHORTENED_BRANCH-$GIT_SHORT_SHA"
-          GIT_COMMIT_AUTHOR_SUBJECT=$(git show -s --format='%an %s')
+          GIT_COMMIT_AUTHOR_SUBJECT=$(git show -s --format='%an %s' | sed "s/'//g")
           echo "git_project_name=$GIT_PROJECT_NAME" >> $GITHUB_OUTPUT
           echo "git_branch=$GIT_BRANCH" >> $GITHUB_OUTPUT
           echo "git_shortened_branch=$GIT_SHORTENED_BRANCH" >> $GITHUB_OUTPUT
