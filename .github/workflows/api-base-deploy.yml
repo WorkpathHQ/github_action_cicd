@@ -3,9 +3,6 @@ name: Base Deploy
 on:
   workflow_call:
     inputs:
-      AWS_ACCESS_KEY_ID_S3:
-        type: string
-        required: true
       EKS_CLUSTER:
         type: string
         required: true
@@ -30,9 +27,6 @@ on:
       WP_DOMAIN:
         type: string
         required: true
-      SMTP_USERNAME:
-        type: string
-        required: false
       WP_K8S_VERSION:
         type: string
         required: false
@@ -41,6 +35,8 @@ on:
       AWS_ACCESS_KEY_ID:
         required: true
       AWS_SECRET_ACCESS_KEY:
+        required: true
+      AWS_ACCESS_KEY_ID_S3:
         required: true
       AWS_SECRET_ACCESS_KEY_S3:
         required: true
@@ -56,6 +52,8 @@ on:
         required: true
       GIT_ACCESS_TOKEN:
         required: true
+      SMTP_USERNAME:
+        required: false
       SMTP_PASSWORD:
         required: false
       DB_MASTER_PASSWORD:
@@ -141,15 +139,15 @@ jobs:
           WP_API_VERSION: ${{ inputs.WP_API_VERSION }}
           WP_WEB_VERSION: ${{ inputs.WP_WEB_VERSION }}
           WP_ENVIRONMENT: ${{ inputs.WP_ENVIRONMENT }}
-          AWS_ACCESS_KEY_ID_S3: ${{ inputs.AWS_ACCESS_KEY_ID_S3 }}
           WP_DOMAIN: ${{ inputs.WP_DOMAIN }}
-          SMTP_USERNAME: ${{ inputs.SMTP_USERNAME }}
+          AWS_ACCESS_KEY_ID_S3: ${{ secrets.AWS_ACCESS_KEY_ID_S3 }}
           AWS_SECRET_ACCESS_KEY_S3: ${{ secrets.AWS_SECRET_ACCESS_KEY_S3 }}
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           SIDEKIQ_CACHE_PASSWORD: ${{ secrets.SIDEKIQ_CACHE_PASSWORD }}
           FRAGMENT_CACHE_PASSWORD: ${{ secrets.FRAGMENT_CACHE_PASSWORD }}
           FLIPPER_CACHE_PASSWORD: ${{ secrets.FLIPPER_CACHE_PASSWORD }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           DB_MASTER_PASSWORD: ${{ secrets.DB_MASTER_PASSWORD }}
           HUBSPOT_WORKPATH_ACCESS_TOKEN: ${{ secrets.HUBSPOT_WORKPATH_ACCESS_TOKEN }}
