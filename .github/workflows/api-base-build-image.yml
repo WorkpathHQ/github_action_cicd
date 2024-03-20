@@ -22,7 +22,7 @@ env:
 jobs:
   base_build_image:
     name: Build image
-    runs-on: ubuntu-latest
+    runs-on: 8-cores
     steps:
       - name: Check out code
         uses: actions/checkout@v3
