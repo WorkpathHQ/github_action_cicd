@@ -104,7 +104,7 @@ jobs:
           echo "k8sVersion=${k8sVersion:=${{ steps.latest_release_tag.outputs.latest_release_tag }}}" >> $GITHUB_OUTPUT
 
       - name: Clone workpath_k8s repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: WorkpathHQ/workpath_k8s
           ref: ${{ steps.k8sVersion.outputs.k8sVersion }}
