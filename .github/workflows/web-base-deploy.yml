@@ -3,9 +3,6 @@ name: Base Deploy
 on:
   workflow_call:
     inputs:
-      AWS_ACCESS_KEY_ID_S3:
-        type: string
-        required: true
       EKS_CLUSTER:
         type: string
         required: true
@@ -30,9 +27,6 @@ on:
       WP_DOMAIN:
         type: string
         required: true
-      SMTP_USERNAME:
-        type: string
-        required: false
       WP_K8S_VERSION:
         type: string
         required: false
@@ -52,6 +46,8 @@ on:
         required: true
       AWS_SECRET_ACCESS_KEY:
         required: true
+      AWS_ACCESS_KEY_ID_S3:
+        required: true
       AWS_SECRET_ACCESS_KEY_S3:
         required: true
       RAILS_MASTER_KEY:
@@ -66,6 +62,8 @@ on:
         required: true
       GIT_ACCESS_TOKEN:
         required: true
+      SMTP_USERNAME:
+        required: false
       SMTP_PASSWORD:
         required: false
 
@@ -147,9 +145,9 @@ jobs:
           WP_API_VERSION: ${{ inputs.WP_API_VERSION }}
           WP_WEB_VERSION: ${{ inputs.WP_WEB_VERSION }}
           WP_ENVIRONMENT: ${{ inputs.WP_ENVIRONMENT }}
-          AWS_ACCESS_KEY_ID_S3: ${{ inputs.AWS_ACCESS_KEY_ID_S3 }}
+          AWS_ACCESS_KEY_ID_S3: ${{ secrets.AWS_ACCESS_KEY_ID_S3 }}
           WP_DOMAIN: ${{ inputs.WP_DOMAIN }}
-          SMTP_USERNAME: ${{ inputs.SMTP_USERNAME }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
           GA_TRACKING_ID: ${{ inputs.GA_TRACKING_ID }}
           SENTRY_ENVIRONMENT: ${{ inputs.SENTRY_ENVIRONMENT }}
           SENTRY_URL: ${{ inputs.SENTRY_URL }}
