@@ -67,9 +67,9 @@ on:
       SMTP_PASSWORD:
         required: false
       AZURE_API_KEY:
-        required: true
+        required: false
       OPEN_AI_AZURE_URI:
-        required: true
+        required: false
 
 
 
