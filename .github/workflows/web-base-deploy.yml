@@ -66,6 +66,11 @@ on:
         required: false
       SMTP_PASSWORD:
         required: false
+      AZURE_API_KEY:
+        required: true
+      OPEN_AI_AZURE_URI:
+        required: true
+
 
 
 env:
@@ -135,7 +140,7 @@ jobs:
             kubectl -n workpath-${{ inputs.WP_ENVIRONMENT }} rollout status deploy workpath-web --timeout=0s
             echo "Successful deployment on $(tr '[:lower:]' '[:upper:]' <<< ${{ inputs.WP_ENVIRONMENT }})"
           fi
-          
+
 
         # Workaround for setting inputs as environmental variables (https://github.com/actions/runner/issues/665#issuecomment-699481628)
         env:
@@ -158,4 +163,6 @@ jobs:
           FLIPPER_CACHE_PASSWORD: ${{ secrets.FLIPPER_CACHE_PASSWORD }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          AZURE_API_KEY: ${{ secrets.AZURE_API_KEY }}
+          OPEN_AI_AZURE_URI: ${{ secrets.OPEN_AI_AZURE_URI }}
 
