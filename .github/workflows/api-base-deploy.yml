@@ -67,9 +67,9 @@ on:
       OPEN_AI_AZURE_URI:
         required: true
       AWS_ACCESS_KEY_ID_BEDROCK:
-        required: true
+        required: false
       AWS_SECRET_ACCESS_KEY_BEDROCK:
-        required: true
+        required: false
 
 
 env:
