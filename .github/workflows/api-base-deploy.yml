@@ -66,6 +66,10 @@ on:
         required: true
       OPEN_AI_AZURE_URI:
         required: true
+      AWS_ACCESS_KEY_ID_BEDROCK:
+        required: false
+      AWS_SECRET_ACCESS_KEY_BEDROCK:
+        required: false
 
 
 env:
@@ -159,3 +163,5 @@ jobs:
           TABLEAU_ADMIN_PASSWORD: ${{ secrets.TABLEAU_ADMIN_PASSWORD }}
           AZURE_API_KEY: ${{ secrets.AZURE_API_KEY }}
           OPEN_AI_AZURE_URI: ${{ secrets.OPEN_AI_AZURE_URI }}
+          AWS_ACCESS_KEY_ID_BEDROCK: ${{ secrets.AWS_ACCESS_KEY_ID_BEDROCK }}
+          AWS_SECRET_ACCESS_KEY_BEDROCK: ${{ secrets.AWS_SECRET_ACCESS_KEY_BEDROCK }}
