@@ -131,7 +131,7 @@ jobs:
           ./envsubst-multi.sh && source ./envsubst-multi.sh
           kubectl apply -k overlays/${{ inputs.WP_ENVIRONMENT }}
           if [ ${{ inputs.WP_ENVIRONMENT }} == qa ]; then
-            kubectl rollout status deploy workpath-api -n $WP_SUBDOMAIN --timeout=400s
+            kubectl rollout status deploy workpath-api -n $WP_SUBDOMAIN --timeout=900s
             echo "Successful deployment on $(tr '[:lower:]' '[:upper:]' <<< ${{ inputs.WP_ENVIRONMENT }}), reachable via $WP_SUBDOMAIN.admin.$WP_DOMAIN, $WP_SUBDOMAIN.api.$WP_DOMAIN, $WP_SUBDOMAIN.connect.$WP_DOMAIN"
           else
             kubectl -n workpath-${{ inputs.WP_ENVIRONMENT }} rollout restart deployment workpath-api workpath-cronjobs workpath-sidekiq workpath-sidekiq-graph workpath-sidekiq-integrations
