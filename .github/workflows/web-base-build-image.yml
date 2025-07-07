@@ -47,6 +47,8 @@ on:
         required: true
       CYPRESS_SESSION_AUTH_TOKEN:
         required: true
+      POSTHOG_KEY:
+        required: false
 
 env:
   AWS_DEFAULT_REGION: eu-central-1
