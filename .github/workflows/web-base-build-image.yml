@@ -33,6 +33,9 @@ on:
       WP_ENVIRONMENT:
         type: string
         required: false
+      POSTHOG_HOST:
+        type: string
+        required: true
 
     secrets:
       AWS_ACCESS_KEY_ID:
