@@ -167,4 +167,5 @@ jobs:
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           AZURE_API_KEY: ${{ secrets.STAGING_AZURE_API_KEY }}
           OPEN_AI_AZURE_URI: ${{ secrets.STAGING_OPEN_AI_AZURE_URI }}
+          POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
 
