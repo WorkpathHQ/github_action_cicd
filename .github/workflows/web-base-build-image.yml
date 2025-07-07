@@ -35,7 +35,7 @@ on:
         required: false
       POSTHOG_HOST:
         type: string
-        required: true
+        required: false
 
     secrets:
       AWS_ACCESS_KEY_ID:

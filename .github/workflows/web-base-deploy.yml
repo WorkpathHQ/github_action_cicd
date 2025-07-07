@@ -41,7 +41,7 @@ on:
         required: true
       POSTHOG_HOST:
         type: string
-        required: true
+        required: false
 
 
     secrets:
