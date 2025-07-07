@@ -70,6 +70,8 @@ on:
         required: false
       OPEN_AI_AZURE_URI:
         required: false
+      POSTHOG_KEY:
+        required: false
 
 
 
