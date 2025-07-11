@@ -42,7 +42,9 @@ on:
       POSTHOG_HOST:
         type: string
         required: false
-
+      AGENT_BASE:
+        type: string
+        required: false
 
     secrets:
       AWS_ACCESS_KEY_ID:
