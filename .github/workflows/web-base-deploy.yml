@@ -30,9 +30,6 @@ on:
       WP_K8S_VERSION:
         type: string
         required: false
-      GA_TRACKING_ID:
-        type: string
-        required: true
       SENTRY_ENVIRONMENT:
         type: string
         required: true
@@ -161,7 +158,6 @@ jobs:
           AWS_ACCESS_KEY_ID_S3: ${{ secrets.AWS_ACCESS_KEY_ID_S3 }}
           WP_DOMAIN: ${{ inputs.WP_DOMAIN }}
           SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          GA_TRACKING_ID: ${{ inputs.GA_TRACKING_ID }}
           SENTRY_ENVIRONMENT: ${{ inputs.SENTRY_ENVIRONMENT }}
           SENTRY_URL: ${{ inputs.SENTRY_URL }}
           AWS_SECRET_ACCESS_KEY_S3: ${{ secrets.AWS_SECRET_ACCESS_KEY_S3 }}

@@ -12,22 +12,10 @@ on:
       API_BASE:
         type: string
         required: true
-      GA_TRACKING_ID:
-        type: string
-        required: true
       SENTRY_ENVIRONMENT:
         type: string
         required: true
       SENTRY_URL:
-        type: string
-        required: true
-      CYPRESS_USER_AUTH_USER:
-        type: string
-        required: true
-      CYPRESS_BASE_URL:
-        type: string
-        required: true
-      CYPRESS_WORKPATH_ACCOUNT:
         type: string
         required: true
       WP_ENVIRONMENT:
@@ -48,10 +36,6 @@ on:
       FONTAWESOME_TOKEN:
         required: true
       BAUKASTEN_TOKEN:
-        required: true
-      CYPRESS_USER_AUTH_PASS:
-        required: true
-      CYPRESS_SESSION_AUTH_TOKEN:
         required: true
       POSTHOG_KEY:
         required: false
@@ -80,5 +64,5 @@ jobs:
 
       - name: Build, tag, and push image to AWS ECR
         run: |
-          docker build --build-arg AGENT_BASE=${{ inputs.AGENT_BASE }} --build-arg FONTAWESOME_TOKEN=${{ secrets.FONTAWESOME_TOKEN }} --build-arg API_BASE=${{ inputs.API_BASE }} --build-arg BAUKASTEN_TOKEN=${{ secrets.BAUKASTEN_TOKEN }} --build-arg SENTRY_URL=${{ inputs.SENTRY_URL }} --build-arg GA_TRACKING_ID=${{ inputs.GA_TRACKING_ID }} --build-arg SENTRY_ENVIRONMENT=${{ inputs.SENTRY_ENVIRONMENT }} --build-arg CYPRESS_USER_AUTH_USER=${{ inputs.CYPRESS_USER_AUTH_USER }} --build-arg CYPRESS_USER_AUTH_PASS=${{ secrets.CYPRESS_USER_AUTH_PASS }} --build-arg CYPRESS_BASE_URL=${{ inputs.CYPRESS_BASE_URL }} --build-arg CYPRESS_WORKPATH_ACCOUNT=${{ inputs.CYPRESS_WORKPATH_ACCOUNT }} --build-arg CYPRESS_SESSION_AUTH_TOKEN=${{ secrets.CYPRESS_SESSION_AUTH_TOKEN }} --build-arg POSTHOG_HOST=${{ inputs.POSTHOG_HOST }} --build-arg POSTHOG_KEY=${{ secrets.POSTHOG_KEY }} --tag ${{ env.ECR_REGISTRY }}/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }} .
+          docker build --build-arg AGENT_BASE=${{ inputs.AGENT_BASE }} --build-arg FONTAWESOME_TOKEN=${{ secrets.FONTAWESOME_TOKEN }} --build-arg API_BASE=${{ inputs.API_BASE }} --build-arg BAUKASTEN_TOKEN=${{ secrets.BAUKASTEN_TOKEN }} --build-arg SENTRY_URL=${{ inputs.SENTRY_URL }} --build-arg SENTRY_ENVIRONMENT=${{ inputs.SENTRY_ENVIRONMENT }} --build-arg POSTHOG_HOST=${{ inputs.POSTHOG_HOST }} --build-arg POSTHOG_KEY=${{ secrets.POSTHOG_KEY }} --tag ${{ env.ECR_REGISTRY }}/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }} .
           docker push ${{ env.ECR_REGISTRY }}/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }}
