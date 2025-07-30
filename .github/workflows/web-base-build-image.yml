@@ -75,8 +75,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ env.ECR_REGISTRY }}/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=${{ env.ECR_REGISTRY }}/${{ inputs.ECR_REPOSITORY }}:cache
+          cache-to: type=registry,mode=max,image-manifest=true,oci-mediatypes=true,ref=${{ env.ECR_REGISTRY }}/${{ inputs.ECR_REPOSITORY }}:cache
           build-args: |
             FONTAWESOME_TOKEN=${{ secrets.FONTAWESOME_TOKEN }}
             API_BASE=${{ inputs.API_BASE }}
