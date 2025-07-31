@@ -62,7 +62,27 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build, tag, and push image to AWS ECR
-        run: |
-          docker build --build-arg AGENT_BASE=${{ inputs.AGENT_BASE }} --build-arg FONTAWESOME_TOKEN=${{ secrets.FONTAWESOME_TOKEN }} --build-arg API_BASE=${{ inputs.API_BASE }} --build-arg BAUKASTEN_TOKEN=${{ secrets.BAUKASTEN_TOKEN }} --build-arg SENTRY_URL=${{ inputs.SENTRY_URL }} --build-arg SENTRY_ENVIRONMENT=${{ inputs.SENTRY_ENVIRONMENT }} --build-arg POSTHOG_HOST=${{ inputs.POSTHOG_HOST }} --build-arg POSTHOG_KEY=${{ secrets.POSTHOG_KEY }} --tag ${{ env.ECR_REGISTRY }}/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }} .
-          docker push ${{ env.ECR_REGISTRY }}/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Build and push image to AWS ECR
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ env.ECR_REGISTRY }}/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }}
+          cache-from: type=registry,ref=${{ env.ECR_REGISTRY }}/${{ inputs.ECR_REPOSITORY }}:cache-${{ inputs.WP_ENVIRONMENT }}
+          cache-to: type=registry,mode=max,image-manifest=true,oci-mediatypes=true,ref=${{ env.ECR_REGISTRY }}/${{ inputs.ECR_REPOSITORY }}:cache-${{ inputs.WP_ENVIRONMENT }}
+          build-args: |
+            FONTAWESOME_TOKEN=${{ secrets.FONTAWESOME_TOKEN }}
+            API_BASE=${{ inputs.API_BASE }}
+            BAUKASTEN_TOKEN=${{ secrets.BAUKASTEN_TOKEN }}
+            POSTHOG_KEY=${{ secrets.POSTHOG_KEY }}
+            SENTRY_URL=${{ inputs.SENTRY_URL }}
+            SENTRY_ENVIRONMENT=${{ inputs.SENTRY_ENVIRONMENT }}
+            POSTHOG_HOST=${{ inputs.POSTHOG_HOST }}
+            AGENT_BASE=${{ inputs.AGENT_BASE }}
