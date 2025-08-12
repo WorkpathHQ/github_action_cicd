@@ -36,7 +36,7 @@ jobs:
       GIT_COMMIT_AUTHOR_SUBJECT: ${{ steps.vars.outputs.git_commit_author_subject }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
      
       - name: Set outputs
         id: vars
