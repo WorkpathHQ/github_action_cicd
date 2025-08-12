@@ -35,8 +35,6 @@ on:
         required: true
       FONTAWESOME_TOKEN:
         required: true
-      BAUKASTEN_TOKEN:
-        required: true
       POSTHOG_KEY:
         required: false
 
@@ -80,7 +78,6 @@ jobs:
           build-args: |
             FONTAWESOME_TOKEN=${{ secrets.FONTAWESOME_TOKEN }}
             API_BASE=${{ inputs.API_BASE }}
-            BAUKASTEN_TOKEN=${{ secrets.BAUKASTEN_TOKEN }}
             POSTHOG_KEY=${{ secrets.POSTHOG_KEY }}
             SENTRY_URL=${{ inputs.SENTRY_URL }}
             SENTRY_ENVIRONMENT=${{ inputs.SENTRY_ENVIRONMENT }}
