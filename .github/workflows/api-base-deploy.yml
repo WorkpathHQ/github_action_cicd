@@ -70,6 +70,8 @@ on:
         required: false
       AWS_SECRET_ACCESS_KEY_BEDROCK:
         required: false
+      POSTHOG_KEY:
+        required: false
 
 
 env:
@@ -165,3 +167,4 @@ jobs:
           OPEN_AI_AZURE_URI: ${{ secrets.OPEN_AI_AZURE_URI }}
           AWS_ACCESS_KEY_ID_BEDROCK: ${{ secrets.AWS_ACCESS_KEY_ID_BEDROCK }}
           AWS_SECRET_ACCESS_KEY_BEDROCK: ${{ secrets.AWS_SECRET_ACCESS_KEY_BEDROCK }}
+          POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
