@@ -9,22 +9,7 @@ on:
       IMAGE_TAG:
         type: string
         required: true
-      API_BASE:
-        type: string
-        required: true
-      SENTRY_ENVIRONMENT:
-        type: string
-        required: true
-      SENTRY_URL:
-        type: string
-        required: true
       WP_ENVIRONMENT:
-        type: string
-        required: false
-      POSTHOG_HOST:
-        type: string
-        required: false
-      AGENT_BASE:
         type: string
         required: false
 
@@ -77,9 +62,3 @@ jobs:
           cache-to: type=registry,mode=max,image-manifest=true,oci-mediatypes=true,ref=${{ env.ECR_REGISTRY }}/${{ inputs.ECR_REPOSITORY }}:cache-${{ inputs.WP_ENVIRONMENT }}
           build-args: |
             FONTAWESOME_TOKEN=${{ secrets.FONTAWESOME_TOKEN }}
-            API_BASE=${{ inputs.API_BASE }}
-            POSTHOG_KEY=${{ secrets.POSTHOG_KEY }}
-            SENTRY_URL=${{ inputs.SENTRY_URL }}
-            SENTRY_ENVIRONMENT=${{ inputs.SENTRY_ENVIRONMENT }}
-            POSTHOG_HOST=${{ inputs.POSTHOG_HOST }}
-            AGENT_BASE=${{ inputs.AGENT_BASE }}

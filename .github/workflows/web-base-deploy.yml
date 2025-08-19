@@ -30,18 +30,6 @@ on:
       WP_K8S_VERSION:
         type: string
         required: false
-      SENTRY_ENVIRONMENT:
-        type: string
-        required: true
-      SENTRY_URL:
-        type: string
-        required: true
-      POSTHOG_HOST:
-        type: string
-        required: false
-      AGENT_BASE:
-        type: string
-        required: false
 
     secrets:
       AWS_ACCESS_KEY_ID:
@@ -158,8 +146,6 @@ jobs:
           AWS_ACCESS_KEY_ID_S3: ${{ secrets.AWS_ACCESS_KEY_ID_S3 }}
           WP_DOMAIN: ${{ inputs.WP_DOMAIN }}
           SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SENTRY_ENVIRONMENT: ${{ inputs.SENTRY_ENVIRONMENT }}
-          SENTRY_URL: ${{ inputs.SENTRY_URL }}
           AWS_SECRET_ACCESS_KEY_S3: ${{ secrets.AWS_SECRET_ACCESS_KEY_S3 }}
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           SIDEKIQ_CACHE_PASSWORD: ${{ secrets.SIDEKIQ_CACHE_PASSWORD }}
