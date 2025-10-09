@@ -135,16 +135,19 @@ jobs:
           case "${{ inputs.WP_ENVIRONMENT }}" in
             qa)
               kubectl rollout status deploy workpath-api -n $WP_SUBDOMAIN --timeout=900s
+              echo "Successful deployment on $(tr '[:lower:]' '[:upper:]' <<< ${{ inputs.WP_ENVIRONMENT }}), reachable via $WP_SUBDOMAIN.admin.$WP_DOMAIN, $WP_SUBDOMAIN.api.$WP_DOMAIN, $WP_SUBDOMAIN.connect.$WP_DOMAIN"
               ;;
             staging)
               deployments="workpath-api workpath-cronjobs workpath-sidekiq workpath-sidekiq-graph workpath-sidekiq-integrations"
               kubectl -n workpath-staging rollout restart deployment $deployments
               kubectl -n workpath-staging rollout status deploy workpath-api --timeout=900s
+              echo "Successful deployment on $(tr '[:lower:]' '[:upper:]' <<< ${{ inputs.WP_ENVIRONMENT }})"
               ;;
             production)
               deployments="workpath-api workpath-cronjobs workpath-sidekiq workpath-sidekiq-graph workpath-sidekiq-integrations workpath-api-task"
               kubectl -n workpath-production rollout restart deployment $deployments
               kubectl -n workpath-production rollout status deploy workpath-api --timeout=900s
+              echo "Successful deployment on $(tr '[:lower:]' '[:upper:]' <<< ${{ inputs.WP_ENVIRONMENT }})"
               ;;
           esac
         # Workaround for setting inputs as environmental variables (https://github.com/actions/runner/issues/665#issuecomment-699481628)
