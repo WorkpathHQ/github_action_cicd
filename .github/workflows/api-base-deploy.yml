@@ -149,6 +149,12 @@ jobs:
               kubectl -n workpath-production rollout status deploy workpath-api --timeout=900s
               echo "Successful deployment on $(tr '[:lower:]' '[:upper:]' <<< ${{ inputs.WP_ENVIRONMENT }})"
               ;;
+            eu2)
+              deployments="workpath-api workpath-cronjobs workpath-sidekiq workpath-sidekiq-graph workpath-sidekiq-integrations"
+              kubectl -n workpath-production rollout restart deployment $deployments
+              kubectl -n workpath-production rollout status deploy workpath-api --timeout=900s
+              echo "Successful deployment on $(tr '[:lower:]' '[:upper:]' <<< ${{ inputs.WP_ENVIRONMENT }})"
+              ;;
           esac
         # Workaround for setting inputs as environmental variables (https://github.com/actions/runner/issues/665#issuecomment-699481628)
         env:
