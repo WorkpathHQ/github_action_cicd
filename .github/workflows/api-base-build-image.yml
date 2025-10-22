@@ -26,6 +26,8 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v5
+        with:
+          ref: PL-4225-deploy-backend-into-new-infrastructure-and-configure-it-so-that-it-responds-to-eu2-environment
      
       - uses: aws-actions/configure-aws-credentials@v5.1.0
         with:
