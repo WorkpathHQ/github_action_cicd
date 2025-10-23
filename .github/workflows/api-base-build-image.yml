@@ -27,7 +27,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v5
         with:
-          ref: refs/heads/PL-4225-deploy-backend-into-new-infrastructure-and-configure-it-so-that-it-responds-to-eu2-environment
+          ref: PL-4225-deploy-backend-into-new-infrastructure-and-configure-it-so-that-it-responds-to-eu2-environment
           repository: workpathhq/workpath_api
           fetch-depth: 1
      
