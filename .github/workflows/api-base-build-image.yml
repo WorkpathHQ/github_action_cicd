@@ -28,6 +28,8 @@ jobs:
         uses: actions/checkout@v5
         with:
           ref: refs/heads/PL-4225-deploy-backend-into-new-infrastructure-and-configure-it-so-that-it-responds-to-eu2-environment
+          repository: ${{ github.repository }}
+          fetch-depth: 1
      
       - uses: aws-actions/configure-aws-credentials@v5.1.0
         with:
