@@ -72,6 +72,8 @@ on:
         required: false
       POSTHOG_KEY:
         required: false
+      AG_GRID_LICENSE:
+        required: false
 
 
 env:
@@ -182,3 +184,4 @@ jobs:
           AWS_ACCESS_KEY_ID_BEDROCK: ${{ secrets.AWS_ACCESS_KEY_ID_BEDROCK }}
           AWS_SECRET_ACCESS_KEY_BEDROCK: ${{ secrets.AWS_SECRET_ACCESS_KEY_BEDROCK }}
           POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+          AG_GRID_LICENSE: ${{ secrets.AG_GRID_LICENSE }}

@@ -37,6 +37,8 @@ on:
         required: true
       POSTHOG_KEY:
         required: false
+      AG_GRID_LICENSE:
+        required: false
 
 env:
   AWS_DEFAULT_REGION: eu-central-1
@@ -79,6 +81,7 @@ jobs:
             FONTAWESOME_TOKEN=${{ secrets.FONTAWESOME_TOKEN }}
             API_BASE=${{ inputs.API_BASE }}
             POSTHOG_KEY=${{ secrets.POSTHOG_KEY }}
+            AG_GRID_LICENSE=${{ secrets.AG_GRID_LICENSE }}
             SENTRY_URL=${{ inputs.SENTRY_URL }}
             SENTRY_ENVIRONMENT=${{ inputs.SENTRY_ENVIRONMENT }}
             POSTHOG_HOST=${{ inputs.POSTHOG_HOST }}
