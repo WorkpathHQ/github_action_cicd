@@ -153,8 +153,8 @@ jobs:
               ;;
             eu2)
               deployments="workpath-api workpath-cronjobs workpath-sidekiq workpath-sidekiq-graph workpath-sidekiq-integrations"
-              kubectl -n workpath-production rollout restart deployment $deployments
-              kubectl -n workpath-production rollout status deploy workpath-api --timeout=900s
+              kubectl -n workpath-eu2 rollout restart deployment $deployments
+              kubectl -n workpath-eu2 rollout status deploy workpath-api --timeout=900s
               echo "Successful deployment on $(tr '[:lower:]' '[:upper:]' <<< ${{ inputs.WP_ENVIRONMENT }})"
               ;;
           esac
